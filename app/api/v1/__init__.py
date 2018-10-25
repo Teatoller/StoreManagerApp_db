@@ -8,7 +8,6 @@ from flask_restful import Resource, Api
 # from app.api.v1.views.users import Registration, Login, Allusers
 
 
-
 version_1 = Blueprint('api', __name__, url_prefix="/api/v1")
 api = Api(version_1)
 
