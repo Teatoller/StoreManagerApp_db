@@ -16,15 +16,14 @@ class Sales(Resource):
     def post(self):
         """ Method for validating and adding Sale """
         data = request.get_json(force=True)
-        if 'name' not in data:
-            return {"msg": "please input name"}, 406
-        if 'price' not in data:
-            return {"msg": "please input price :"}, 406
-        if 'quantity' not in data:
-            return{"msg": "Stock is Nil"}, 406
-        if 'category' not in data:
-            return{"msg": "Stock is not categorized"}, 406
-
+        # if 'name' not in data:
+        #     return {"msg": "please input name"}, 406
+        # if 'price' not in data:
+        #     return {"msg": "please input price :"}, 406
+        # if 'quantity' not in data:
+        #     return{"msg": "Stock is Nil"}, 406
+        # if 'category' not in data:
+        #     return{"msg": "Stock is not categorized"}, 406
 
         sale = SaleModel(
             data['name'],
@@ -40,3 +39,4 @@ class Sales(Resource):
          SALES  database"""
         sale = [sal.resultant() for sal in ListDatabase.SALES]
         return {"status": "Retrieval of sale records successful!", "sales": sale}, 200
+        
