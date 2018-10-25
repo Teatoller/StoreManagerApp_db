@@ -24,7 +24,8 @@ class Sales(Resource):
             return{"msg": "Stock is Nil"}, 406
         if 'category' not in data:
             return{"msg": "Stock is not categorized"}, 406
-            
+
+
         sale = SaleModel(
             data['name'],
             data['price'],
@@ -39,4 +40,3 @@ class Sales(Resource):
          SALES  database"""
         sale = [sal.resultant() for sal in ListDatabase.SALES]
         return {"status": "Retrieval of sale records successful!", "sales": sale}, 200
-        

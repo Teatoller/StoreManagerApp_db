@@ -1,4 +1,4 @@
-class ProductModel():
+lass ProductModel():
     """ Constructor model for our PRODUCTS """
     product_id = 1
 
@@ -23,8 +23,12 @@ class ProductModel():
 
 class ListDatabase():
     """ Database Model for methods """
+   
     PRODUCTS = []
-       
+    SALES = []
+    USERS = []
+
+   
     @classmethod
     def get_product_by_name(cls, name):
         """ Iterates and loops and returns all products in PRODUCT list """
