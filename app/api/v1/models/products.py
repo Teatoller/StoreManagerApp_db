@@ -23,12 +23,8 @@ class ProductModel():
 
 class ListDatabase():
     """ Database Model for methods """
-   
     PRODUCTS = []
-    SALES = []
-    USERS = []
-
-   
+       
     @classmethod
     def get_product_by_name(cls, name):
         """ Iterates and loops and returns all products in PRODUCT list """
