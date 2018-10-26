@@ -49,3 +49,4 @@ class TestProduct(unittest.TestCase):
         prod_id = product.product_id
         product = self.app.get('/api/v1/products/{}'.format(prod_id))
         self.assertEqual(product.status_code, 200)
+        
