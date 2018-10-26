@@ -1,6 +1,6 @@
 import unittest
 from flask import json
-from app import create_app
+from app.apps import create_app
 from app.api.v1.models.sales import ListDatabase
 
 config_name = "testing"
