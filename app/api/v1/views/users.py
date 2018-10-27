@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash, \
      check_password_hash
 
  
+
 class Registration(Resource):
     def post(self):
         data = request.get_json(force=True)
@@ -20,8 +21,8 @@ class Registration(Resource):
     
         email = data['email']     
         if not re.match(r"^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})$", email):
-            return {"msg": " Email not valid"}, 406
-                
+            return {"msg":" Email not valid"}, 406
+              
         user = UserModel(
             data['username'],
             data['email'],
@@ -50,17 +51,16 @@ class Login(Resource):
 # checks if a user with the username exists
         user = ListDatabase.get_user_by_username(username)
         if not user:
-            return {'message': 'not foundfcgvhbj'}
-        
-            
-
+            return {'message': 'not found'}
+       
+      
 # compare user password with stored password in USERS list
         user = ListDatabase.get_user_by_password(password)
         print(user)
         if not user:
-            return {'message': 'not foundp'}
+            return {'message': 'not found'}
 
-        return {'msg':'user login succesful', 'user':username}, 200
+        return {'msg': 'user login succesful', 'user': username}, 200
 
         
 class Allusers(Resource):

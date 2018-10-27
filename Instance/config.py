@@ -28,7 +28,7 @@ class ReleaseConfig(Config):
 
 #  config Dictionary in key value pairs
 app_config = {
-    'development': DevelopmentConfig,
+    'developments': DevelopmentConfig,
     'testing': TestingConfig,
     'release': ReleaseConfig,
 }
