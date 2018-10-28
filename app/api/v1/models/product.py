@@ -1,4 +1,4 @@
-lass ProductModel():
+class ProductModel():
     """ Constructor model for our PRODUCTS """
     product_id = 1
 
@@ -27,7 +27,6 @@ class ListDatabase():
     PRODUCTS = []
     SALES = []
     USERS = []
-
    
     @classmethod
     def get_product_by_name(cls, name):
@@ -42,3 +41,4 @@ class ListDatabase():
         for product in cls.PRODUCTS:
             if product.product_id == product_id:
                 return product
+

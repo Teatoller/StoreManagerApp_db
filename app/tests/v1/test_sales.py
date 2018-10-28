@@ -48,4 +48,3 @@ class TestSale(unittest.TestCase):
         sale_id = sale.sale_id
         sale = self.app.get('/api/v1/sales/{}'.format(sale_id))
         self.assertEqual(sale.status_code, 200)
-        
