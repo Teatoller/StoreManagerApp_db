@@ -17,7 +17,7 @@ class Data():
     def create_table(self):
         self.cursor.execute("CREATE TABLE storerecord (id serial PRIMARY KEY, name varchar(30), age integer NOT NULL)")
 
-
+"""(CREATE TABLE sales(product_id int, name varchar(255), price varchar(255), quantity varchar(255), category varchar(255));""")
 
 if __name__ == '__main__':
     database_conn = Data()
