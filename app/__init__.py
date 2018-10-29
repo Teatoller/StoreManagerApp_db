@@ -1,6 +1,6 @@
 from flask import Flask
 from Instance.config import app_config
-from app.api.v2.models.db import salestable, productstable, userstable
+from db import salestable, productstable, userstable
 
 # creating the app
 
