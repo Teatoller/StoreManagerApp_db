@@ -90,17 +90,7 @@ class Login(Resource):
             return response
         connection.commit()
 
-# # compare user password with stored password in USERS list
-#         user=ListDatabase.get_user_by_password(password)
-#         print(user)
-#         if not user:
-#             return {'message': 'not found'}
 
-#         return {'msg': 'user login succesful', 'user': username}, 200
-
-
-# class Allusers(Resource):
-#     def get(self):
-#         user = [user.resultant() for user in ListDatabase.USERS]
-#         return{'msg': 'Retrival of all users successul', "users":user}, 200
-
+class LogoutAccess(Resource):
+    def post(self):
+        return {'message': 'User logout'}
