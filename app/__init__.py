@@ -9,9 +9,9 @@ def create_app(config_name='development'):
     app = Flask(__name__)
     app.config.from_object(app_config[config_name])
     app.url_map.strict_slashes = False
-    salestable()
-    productstable()
-    userstable()
+    # salestable()
+    # productstable()
+    # userstable()
 
     # Use application to name our blueprint
     from app.api.v1 import version_1 as v1
