@@ -58,3 +58,49 @@ class Registration(Resource):
         cursor.execute(INSERT INTO users(firstname character varying(50) NOT NULL, lastname character varying(50), username character varying(50) NOT NULL, email character varying(50));
         VALUES('"firstname", "Lastname", "username", "email", "password", "role"')
         connection.commit()
+
+
+class Login(Resource):
+    def post(self):
+        data=request.get_json()
+        username=data['username'] or data['email']
+        password=data['password']
+
+#  validate user input
+        if not username:
+            return {'message': 'username cannot be empty'}, 400
+
+        if not password:
+            return {'message': 'password cannot be empty'}, 400
+
+# checks if a user with the username exists
+        # user=ListDatabase.get_user_by_username(username)
+        cursor.execute("SELECT * from users WHERE username=%s AND password=%s,(username, password)")
+        users=cursor.fetchone()
+        
+        access_token=create_access_token(identity=username)
+        return jsonify(access_token=access_token), 200
+        
+        if not user:
+            invalidUserErrorMsg={
+                "error": "You are not registered",
+                "helpString": "See your system admin for registration"
+                }
+            response=Response(json.dumps(invalidUserErrorMsg), status=400, mimetype='application/json')
+            return response
+        connection.commit()
+
+# # compare user password with stored password in USERS list
+#         user=ListDatabase.get_user_by_password(password)
+#         print(user)
+#         if not user:
+#             return {'message': 'not found'}
+
+#         return {'msg': 'user login succesful', 'user': username}, 200
+
+
+# class Allusers(Resource):
+#     def get(self):
+#         user = [user.resultant() for user in ListDatabase.USERS]
+#         return{'msg': 'Retrival of all users successul', "users":user}, 200
+
