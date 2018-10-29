@@ -38,11 +38,20 @@ class Registration(Resource):
                 }
             response = Response(json.dumps(invalidEmailErrorMsg), status=400, mimetype='application/json')
             return response
+
+        password = data['password']    
+        if not re.match("^[a-zA-Z0-9_]*$", password):
+            invalidpasswordErrorMsg = {
+                "error": "Password cannot be blank or have special characters",
+                "helpString": "Enter start password , data to be passed similar this {'password': 'test123'}"
+                }
+            response = Response(json.dumps(invalidpasswordErrorMsg), status=400, mimetype='application/json')
+            return response
       
-            user = UserModel(
-                data['username'],
-                data['email'],
-                data['password']
+        user = UserModel(
+            data['username'],
+            data['email'],
+            data['password']
             )
         ListDatabase.USERS.append(user)
         response = user.resultant()
