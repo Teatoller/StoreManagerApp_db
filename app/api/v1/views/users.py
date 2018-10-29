@@ -47,7 +47,6 @@ class Registration(Resource):
                 }
             response = Response(json.dumps(invalidpasswordErrorMsg), status=400, mimetype='application/json')
             return response
-      
         user = UserModel(
             data['username'],
             data['email'],
@@ -67,17 +66,22 @@ class Login(Resource):
 
 #  validate user input
         if not username:
-            return {'message': 'username cannot be empty'},400
+            return {'message': 'username cannot be empty'}, 400
 
         if not password:
-            return {'message': 'password cannot be empty'},400
+            return {'message': 'password cannot be empty'}, 400
 
 # checks if a user with the username exists
         user = ListDatabase.get_user_by_username(username)
         if not user:
-            return {'message': 'not found'}
-       
-      
+            # return {'message': 'not found'}
+            invalidUserErrorMsg = {
+                "error": "You are not registered",
+                "helpString": "See your system admin for registration"
+                }
+            response = Response(json.dumps(invalidUserErrorMsg), status=400, mimetype='application/json')
+            return response
+
 # compare user password with stored password in USERS list
         user = ListDatabase.get_user_by_password(password)
         print(user)
@@ -86,8 +90,17 @@ class Login(Resource):
 
         return {'msg': 'user login succesful', 'user': username}, 200
 
-        
+
 class Allusers(Resource):
     def get(self):
         user = [user.resultant() for user in ListDatabase.USERS]
         return{'msg': 'Retrival of all users successul', "users":user}, 200
+
+
+class User(Resource):
+    def get(self, id):
+        """ Method to return a single user from USERS list """
+        user = ListDatabase.get_user_id(id)
+        if user:
+            return {"status": "successful", "user": user.resultant()}, 200
+        return {"status": "unsuccesful!", "msg": "user not found"}, 404

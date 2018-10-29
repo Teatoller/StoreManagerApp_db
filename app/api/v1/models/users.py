@@ -32,7 +32,7 @@ class ListDatabase():
     USERS = []
 
     @classmethod
-    def get_user_by_id(cls, user_id):
+    def get_user_id(cls, user_id):
         for user in cls.USERS:
             if user.user_id == user_id:
                 return user
