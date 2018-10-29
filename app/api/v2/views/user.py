@@ -48,10 +48,13 @@ class Registration(Resource):
                 invalidpasswordErrorMsg), status=400, mimetype='application/json')
             return response
         user = UserModel(
+            data['Firstname'],
+            data['Lastname'],
             data['username'],
             data['email'],
-            data['password']
+            data['password'],
+            data['role']
         )
-        ListDatabase.users.append(user)
-        response = user.resultant()
-        return {'status': 'Registration Successful', "user": response}, 201
+        cursor.execute(INSERT INTO users(firstname character varying(50) NOT NULL, lastname character varying(50), username character varying(50) NOT NULL, email character varying(50));
+        VALUES('"firstname", "Lastname", "username", "email", "password", "role"')
+        connection.commit()
