@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_jwt_extended import(JWTManager, jwt_optional, create_access_token, get_jwt_identity, get_raw_jwt)
+from app.api.v2.models.users import UserModel
 
 
 class Registration(Resource):
@@ -47,15 +48,14 @@ class Registration(Resource):
                 invalidpasswordErrorMsg), status=400, mimetype='application/json')
             return response
         user = UserModel(
-            data['Firstname'],
-            data['Lastname'],
+            data['firstname'],
+            data['lastname'],
             data['username'],
             data['email'],
             data['password'],
             data['role']
         )
-        cursor.execute(INSERT INTO users(firstname character varying(50) NOT NULL, lastname character varying(50), username character varying(50) NOT NULL, email character varying(50));
-        VALUES('"firstname", "Lastname", "username", "email", "password", "role"')
+        cursor.execute("INSERT INTO users(firstname character varying(50) NOT NULL, lastname character varying(50), username character varying(50) NOT NULL, email character varying(50)) VALUES('"firstname", "Lastname", "username", "email", "password", "role"')
         connection.commit()
 
 
