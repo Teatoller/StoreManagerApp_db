@@ -1,58 +1,51 @@
 import psycopg2
 from psycopg2 import Error
 
-try:
-    connection = psycopg2.connect(user="user_1",
-                                  password="test123",
-                                  host="127.0.0.1",
-                                  port="5432",
-                                  database="storemanager_db")
-    cursor = connection.cursor()
 
-    salestable = ''' CREATE TABLE IF NOT EXISTS sales
-            (sales_id int, name varchar(255),
-            price varchar(255),
-            quantity varchar(255),
-            category varchar(255)); '''
+def db_connection():
+        try:
+                connection = psycopg2.connect(user="user_1",
+                                              password="test123",
+                                              host="127.0.0.1",
+                                              port="5432",
+                                              database="storemanager_db")
+                connection.autocommit = True
+                return connection
+        except (Exception, psycopg2.DatabaseError) as error:
+                print("Error while connecting to PostgreSQL", error)
 
-    cursor.execute(salestable)
-    connection.commit()
 
-    salestable = ''' CREATE TABLE IF NOT EXISTS sales
-            (sales_id int,
-            name varchar(255),
-            price varchar(255),
-            quantity varchar(255),
-            category varchar(255)); '''
+def create_tables():
+        cursor = db_connection().cursor()
+      
+        salestable = """ 
+                        CREATE TABLE IF NOT EXISTS sales
+                        (sales_id serial PRIMARY KEY,
+                        name varchar(255),
+                        price varchar(255),
+                        quantity varchar(255),
+                        category varchar(255));"""
+   
+        productstable = """
+                        CREATE TABLE IF NOT EXISTS products
+                        (product_id serial PRIMARY KEY,
+                        name varchar(255),
+                        price varchar(255),
+                        quantity varchar(255),
+                        category varchar(255));"""
 
-    cursor.execute(salestable)
-    connection.commit()
+        userstable = """
+                        CREATE TABLE IF NOT EXISTS users
+                        (user_id serial PRIMARY KEY,
+                        firstname character varying(50) NOT NULL,
+                        lastname character varying(50),
+                        username character varying(50) NOT NULL,
+                        email character varying(50),
+                        password character varying(50) NOT NULL,
+                        role character varying(50));"""
 
-    productstable = ''' CREATE TABLE IF NOT EXISTS sales
-            (product_id int,
-            name varchar(255),
-            price varchar(255),
-            quantity varchar(255),
-            category varchar(255)); '''
-    cursor.execute(productstable)
-    connection.commit()
+        tables = [userstable, productstable, salestable]
+               
+        for table in tables:
+                cursor.execute(table)
 
-    userstable = ''' CREATE TABLE IF NOT EXISTS sales
-            (user_id int,
-            first_name character varying(50) NOT NULL,
-            last_name character varying(50),
-            username character varying(50) NOT NULL,
-            email character varying(50)); '''
-    cursor.execute(userstable)
-    connection.commit()
-
-    print("Table created successfully in PostgreSQL ")
-    
-except (Exception, psycopg2.DatabaseError) as error:
-    print("Error while connecting to PostgreSQL", error)
-finally:
-    # closing database connection.
-    if(connection):
-        cursor.close()
-        connection.close()
-        print("PostgreSQL connection is closed")
