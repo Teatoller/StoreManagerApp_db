@@ -1,6 +1,5 @@
 from flask import Flask, jsonify, request
-from flask_jwt_extended import(
-    JWTManager, jwt_optional, create_access_token, get_jwt_identity)
+from flask_jwt_extended import(JWTManager, jwt_optional, create_access_token, get_jwt_identity, get_raw_jwt)
 
 
 class Registration(Resource):
@@ -91,6 +90,17 @@ class Login(Resource):
         connection.commit()
 
 
-class LogoutAccess(Resource):
+class Logoutaccess(Resource):
+    """Docstring revokes current user token """
     def post(self):
-        return {'message': 'User logout'}
+        jti=get_raw_jwt()['jti']
+        blackedlist.add(jti)
+        return jsonify({'message': 'User logout successful'}),200
+
+
+class Logoutrefresh(Resource):
+    """Docstring prevents use of blacklisted tokens """
+    def delete(self):
+        jti=get_raw_jwt()['jti']
+        blackedlist.add(jti)
+        return jsonify({'message': 'User logout successful'}),200
