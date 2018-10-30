@@ -1,38 +1,37 @@
+from flask import Flask, jsonify, request
+from flask_jwt_extended import(JWTManager, jwt_optional,
+                               create_access_token,
+                               get_jwt_identity, get_raw_jwt, jwt_required)
+
+
 class UserModel():
     """ """
 
-    user_id = 1
-
     def __init__(self, firstname, lastname, username, email, password, role):
         """ """
-        self.user_id = UserModel.user_id
         self.firstname = firstname
         self.lastname = lastname
         self.username = username
         self.email = email
         self.password = password
         self.role = role
-        UserModel.user_id += 1
+      
 
     def resultant(self):
         """ """
         return dict(
+            firstname=self.firstname,
+            lastname=self.lastname,            
             username=self.username,
             email=self.email,
-            password=self.password
+            password=self.password,
+            role=self.role
         )
-    # @staticmethod
-    # def get_user_by_username(username):
-    #     """ """
-    #     for user in USERS:
-    #         if user['username'] == username:
-    #             return user
-    #         return 0
 
 
 class RevokedTokenModel():
+    """ """
     blackedlist = ()
-
     def check_if_token_blacklisted():
         jti = decrypted_token['jti']
         return jti in blackedlist
@@ -50,26 +49,29 @@ class jwt_required():
     """Docstring prevents blacklisted tokens from re-use """
     def protected():
         return jsonify({'msg': 'Restricted access'})
+    
+    @classmethod
+    @jwt_required
+    def get_user_id(cls, user_id):
+        for user in cls.users:
+            if user.user_id == user_id:
+                return user
+    
+    @classmethod
+    @jwt_required
+    def get_user_by_username(cls, username):
+        """ """
+        for user in cls.users:
+            if user.username == username:
+                return user
+            return 0
 
-    # @jwt_required
-    # @classmethod
-    # def get_user_id(cls, user_id):
-    #     for user in cls.USERS:
-    #         if user.user_id == user_id:
-    #             return user
-    # @jwt_required
-    # @classmethod
-    # def get_user_by_username(cls, username):
-    #     """ """
-    #     for user in cls.USERS:
-    #         if user.username == username:
-    #             return user
-    #         return 0
-    # @jwt_required
-    # @classmethod
-    # def get_user_by_password(cls, password):
-    #     """ """
-    #     for user in cls.USERS:
-    #         if user.password == password:
-    #             return user
-    #         return 0
+    
+    @classmethod
+    @jwt_required
+    def get_user_by_password(cls, password):
+        """ """
+        for user in cls.userstable:
+            if user.password == password:
+                return user
+            return 0
