@@ -15,9 +15,16 @@ class UserModel():
         self.email = email
         self.password = password
         self.role = role
-      
+    
+    def saveuser(self):
+        """ """
+        user = ("INSERT INTO users(firstname, lastname, username, email, password, role) VALUES(%s, %s, %s, %s, %s, %s);",
+                       (firstname, lastname, username, email, password, role))
+        cursor = db_connection().cursor()
+        cursor.execute(user)
+        db_connection().commit()
 
-    def resultant(self):
+    def Resultant(self):
         """ """
         return dict(
             firstname=self.firstname,
@@ -32,6 +39,7 @@ class UserModel():
 class RevokedTokenModel():
     """ """
     blackedlist = ()
+
     def check_if_token_blacklisted():
         jti = decrypted_token['jti']
         return jti in blackedlist
@@ -49,7 +57,7 @@ class jwt_required():
     """Docstring prevents blacklisted tokens from re-use """
     def protected():
         return jsonify({'msg': 'Restricted access'})
-    
+
     @classmethod
     @jwt_required
     def get_user_id(cls, user_id):
@@ -66,7 +74,6 @@ class jwt_required():
                 return user
             return 0
 
-    
     @classmethod
     @jwt_required
     def get_user_by_password(cls, password):
