@@ -54,9 +54,7 @@ class Signup(Resource):
             response = Response(json.dumps(
                 invalidpasswordErrorMsg), status=400, mimetype='application/json')
             return response
-        role = data['role']
-
- 
+        role = data['role'] 
 
         user = UserModel(
             data['firstname'],
@@ -85,8 +83,6 @@ class Login(Resource):
         if not password:
             return {'message': 'password cannot be empty'}, 400
 
-# checks if a user with the username exists
-        # user=ListDatabase.get_user_by_username(username)
         cursor.execute("SELECT * from users WHERE username=%s AND password=%s ,(username, password)")
         users = cursor.fetchone()
         

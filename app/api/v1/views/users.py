@@ -39,7 +39,7 @@ class Registration(Resource):
             response = Response(json.dumps(invalidEmailErrorMsg), status=400, mimetype='application/json')
             return response
 
-        password = data['password']    
+        password = data['password']   
         if not re.match("^[a-zA-Z0-9_]*$", password):
             invalidpasswordErrorMsg = {
                 "error": "Password cannot be blank or have special characters",
@@ -59,7 +59,7 @@ class Registration(Resource):
 
 class Login(Resource):
     def post(self):
-       
+
         data = request.get_json()
         username = data['username'] or data['email']
         password = data['password']
@@ -94,7 +94,7 @@ class Login(Resource):
 class Allusers(Resource):
     def get(self):
         user = [user.resultant() for user in ListDatabase.USERS]
-        return{'msg': 'Retrival of all users successul', "users":user}, 200
+        return{'msg': 'Retrival of all users successul', "users": user}, 200
 
 
 class User(Resource):

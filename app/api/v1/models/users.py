@@ -18,17 +18,10 @@ class UserModel():
             email=self.email,
             password=self.password
         )
-    # @staticmethod
-    # def get_user_by_username(username):
-    #     """ """
-    #     for user in USERS:
-    #         if user['username'] == username:
-    #             return user
-    #         return 0
 
 
 class ListDatabase():
-    
+
     USERS = []
 
     @classmethod
