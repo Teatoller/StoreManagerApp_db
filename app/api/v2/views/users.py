@@ -73,7 +73,7 @@ class Signup(Resource):
 class Login(Resource):
     def post(self):
         data = request.get_json()
-        username = data['username'] or data['email']
+        username = data['username']
         password = data['password']
 
 #  validate user input
