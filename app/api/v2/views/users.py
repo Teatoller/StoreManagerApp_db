@@ -10,8 +10,8 @@ import json
 class Signup(Resource):
     def post(self):
         data = request.get_json()
-        firstname = data['firstname']
-        lastname = data['lastname']
+        first_name = data['firstname']
+        last_name = data['lastname']
         
         valid_username = "".join(data['username'].split())
 
