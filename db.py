@@ -18,7 +18,7 @@ def db_connection():
 def create_tables():
         cursor = db_connection().cursor()
       
-        salestable = """ 
+        sale_stable = """ 
                         CREATE TABLE IF NOT EXISTS sales
                         (sales_id serial PRIMARY KEY,
                         name varchar(255),
@@ -26,7 +26,7 @@ def create_tables():
                         quantity varchar(255),
                         category varchar(255));"""
    
-        productstable = """
+        product_stable = """
                         CREATE TABLE IF NOT EXISTS products
                         (product_id serial PRIMARY KEY,
                         name varchar(255),
@@ -34,7 +34,7 @@ def create_tables():
                         quantity varchar(255),
                         category varchar(255));"""
 
-        userstable = """
+        user_stable = """
                         CREATE TABLE IF NOT EXISTS users
                         (user_id serial PRIMARY KEY,
                         firstname character varying(50) NOT NULL,
@@ -44,7 +44,7 @@ def create_tables():
                         password character varying(50) NOT NULL,
                         role character varying(50));"""
 
-        tables = [userstable, productstable, salestable]
+        tables = [users_table, product_stable, sales_table]
                
         for table in tables:
                 cursor.execute(table)

@@ -27,11 +27,11 @@ class UserModel():
     def Resultant(self):
         """ """
         return dict(
-            firstname=self.firstname,
-            lastname=self.lastname,            
-            username=self.username,
+            first_name=self.firstname,
+            last_name=self.lastname,            
+            user_name=self.username,
             email=self.email,
-            password=self.password,
+            pass_word=self.password,
             role=self.role
         )
 
