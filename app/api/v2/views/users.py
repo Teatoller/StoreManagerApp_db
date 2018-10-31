@@ -24,9 +24,9 @@ class Signup(Resource):
                 invalidUsernameErrorMsg), status=400, mimetype='application/json')
             return response
 
-        username = data['username']
+        user_name = data['username']
 
-        if not re.match("^[a-zA-Z0-9_]*$", username):
+        if not re.match("^[a-zA-Z0-9_]*$", user_name):
             invalidUsernameErrorMsg = {
                 "error": "Invalid username passed in request",
                 "helpString": "Username cannot have special characters e.g # * & data to be passed similar to this {'username': 'steven'}"
