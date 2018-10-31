@@ -15,7 +15,7 @@ class Sale(Resource):
 class Sales(Resource):
     def post(self):
         """ Method for validating and adding Sale """
-        data = request.get_json(force=True)
+        data = request.get_json()
         if 'name' not in data:
             return {"msg": "please input name"}, 406
         if 'price' not in data:
@@ -32,10 +32,12 @@ class Sales(Resource):
             data['category'])
         ListDatabase.SALES.append(sale)
         response = sale.resultant()
-        return {"status": "The sale was made successfully!", "sale": response}, 201
+        return {"status": "The sale was made successfully!",
+                "sale": response}, 201
 
     def get(self):
         """ Iterates and loop SALES list and returns all items in
          SALES  database"""
         sale = [sal.resultant() for sal in ListDatabase.SALES]
-        return {"status": "Retrieval of sale records successful!", "sales": sale}, 200
+        return {"status": "Retrieval of sale records successful!",
+                "sales": sale}, 200
