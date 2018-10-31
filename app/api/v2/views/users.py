@@ -1,19 +1,19 @@
 import re
 from flask import Flask, jsonify, request, Response, make_response
-from flask_jwt_extended import(
-    JWTManager, jwt_optional, create_access_token, get_jwt_identity)
+from flask_jwt_extended import create_access_token
 from app.api.v2.models.users import UserModel
 from flask_restful import Resource
 from db import db_connection
 import json
 from werkzeug.security import check_password_hash
+import datetime
 
 
 class Signup(Resource):
     def post(self):
         data = request.get_json()
-        first_name = data['firstname']
-        last_name = data['lastname']
+        firstname = data['firstname']
+        lastname = data['lastname']
 
         valid_username = "".join(data['username'].split())
 
@@ -26,9 +26,9 @@ class Signup(Resource):
                 invalidUsernameErrorMsg), status=400, mimetype='application/json')
             return response
 
-        user_name = data['username']
+        username = data['username']
 
-        if not re.match("^[a-zA-Z0-9_]*$", user_name):
+        if not re.match("^[a-zA-Z0-9_]*$", username):
             invalidUsernameErrorMsg = {
                 "error": "Invalid username passed in request",
                 "helpString": "Username cannot have special characters e.g # * & data to be passed similar to this {'username': 'steven'}"
@@ -85,12 +85,15 @@ class Login(Resource):
         if not password:
             return {'message': 'password cannot be empty'}, 400
         
-        user = UserModel.get_by_username()
+        current_user = UserModel()
+        user = current_user.get_by_username(username, password)
+        print(user)
 
         if user:
             if check_password_hash(user['password'], password):
-                access_token = create_access_token(identity=username)
-                return jsonify(access_token=access_token), 200
+                exp = datetime.timedelta(minutes=30)
+                access_token = create_access_token(username, exp)                
+                return make_response(jsonify(access_token=access_token), 200)
         if not user:
             invalidUserErrorMsg = {
                 "error": "You are not registered",
