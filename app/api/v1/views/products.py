@@ -8,14 +8,15 @@ class Product(Resource):
         """ Gets Single product """
         product = ListDatabase.get_product_id(id)
         if product:
-            return {"status": "successful", "product": product.resultant()}, 200
+            return {"status": "successful",
+                    "product": product.resultant()}, 200
         return {"status": "unsuccesful!", "msg": "product not found"}, 404
 
 
 class Products(Resource):
     def post(self):
         """ Add and validates product that are added """
-        data = request.get_json(force=True)
+        data = request.get_json()
         if 'name' not in data:
             return {"msg": "please input name"}, 406
         if 'price' not in data:
