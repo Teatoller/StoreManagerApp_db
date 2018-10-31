@@ -14,10 +14,6 @@ def create_app(config_name='development'):
 
     create_tables()
 
-    # Use application to name our blueprint
-    # from app.api.v1 import version_1 as v1
-    # app.register_blueprint(v1)
-
     from app.api.v2 import version_2 as v2
     app.register_blueprint(v2)
     return app
