@@ -9,7 +9,7 @@ import json
 
 class Signup(Resource):
     def post(self):
-        data = request.get_json(force=True)
+        data = request.get_json()
         firstname = data['firstname']
         lastname = data['lastname']
         
