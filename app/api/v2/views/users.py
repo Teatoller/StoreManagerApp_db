@@ -1,10 +1,12 @@
 import re
-from flask import Flask, jsonify, request, Response
-from flask_jwt_extended import(JWTManager, jwt_optional, create_access_token, get_jwt_identity, get_raw_jwt)
+from flask import Flask, jsonify, request, Response, make_response
+from flask_jwt_extended import(
+    JWTManager, jwt_optional, create_access_token, get_jwt_identity)
 from app.api.v2.models.users import UserModel
 from flask_restful import Resource
 from db import db_connection
 import json
+from werkzeug.security import check_password_hash
 
 
 class Signup(Resource):
@@ -12,7 +14,7 @@ class Signup(Resource):
         data = request.get_json()
         first_name = data['firstname']
         last_name = data['lastname']
-        
+
         valid_username = "".join(data['username'].split())
 
         if len(valid_username) < 6:
@@ -54,7 +56,8 @@ class Signup(Resource):
             response = Response(json.dumps(
                 invalidpasswordErrorMsg), status=400, mimetype='application/json')
             return response
-        role = data['role'] 
+
+        role = data['role']
 
         user = UserModel(
             data['firstname'],
@@ -64,10 +67,9 @@ class Signup(Resource):
             data['password'],
             data['role']
         )
-        cursor = db_connection().cursor()
-        cursor.execute("INSERT INTO users(firstname, lastname, username, email, password, role) VALUES(%s, %s, %s, %s, %s, %s);",
-                       (firstname, lastname, username, email, password, role))
-        db_connection().commit()
+        user.saveuser()
+        return make_response(jsonify(
+                {'msg': 'user created succesfully'}), 201)
 
 
 class Login(Resource):
@@ -82,35 +84,36 @@ class Login(Resource):
 
         if not password:
             return {'message': 'password cannot be empty'}, 400
+        
+        user = UserModel.get_by_username()
 
-        cursor.execute("SELECT * from users WHERE username=%s AND password=%s ,(username, password)")
-        users = cursor.fetchone()
-        
-        access_token = create_access_token(identity=username)
-        return jsonify(access_token=access_token), 200
-        
+        if user:
+            if check_password_hash(user['password'], password):
+                access_token = create_access_token(identity=username)
+                return jsonify(access_token=access_token), 200
         if not user:
             invalidUserErrorMsg = {
                 "error": "You are not registered",
                 "helpString": "See your system admin for registration"
-                }
-            response = Response(json.dumps(invalidUserErrorMsg), status=400, mimetype='application/json')
+            }
+            response = Response(json.dumps(invalidUserErrorMsg),
+                                status=400, mimetype='application/json')
             return response
-        db_connection().commit()
-
+        
 
 class Logoutaccess(Resource):
     """Docstring revokes current user token """
+
     def post(self):
         jti = get_raw_jwt()['jti']
         blackedlist.add(jti)
-        return jsonify({'message': 'User logout successful'}),200
+        return jsonify({'message': 'User logout successful'}), 200
 
 
 class Logoutrefresh(Resource):
     """Docstring prevents use of blacklisted tokens """
+
     def delete(self):
         jti = get_raw_jwt()['jti']
         blackedlist.add(jti)
         return jsonify({'message': 'User logout successful'}), 200
-        
