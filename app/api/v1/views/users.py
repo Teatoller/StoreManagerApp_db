@@ -9,43 +9,52 @@ from werkzeug.security import generate_password_hash, \
 
 class Registration(Resource):
     def post(self):
-        data = request.get_json(force=True)
+        data = request.get_json()
         valid_username = "".join(data['username'].split())
 
         if len(valid_username) < 6:
             invalidUsernameErrorMsg = {
                 "error": "Invalid username passed in request",
-                "helpString": "Username less than six char data to be passed similar to this {'username': 'steven'}"
+                "helpString": "Username less than six char data to be
+                passed similar to this {'username': 'steven'}"
                 }
-            response = Response(json.dumps(invalidUsernameErrorMsg), status=400, mimetype='application/json')
+            response = Response(json.dumps(invalidUsernameErrorMsg),
+                                status=400, mimetype='application/json')
             return response
 
         username = data['username']
         
         if not re.match("^[a-zA-Z0-9_]*$", username):
+            
             invalidUsernameErrorMsg = {
                 "error": "Invalid username passed in request",
-                "helpString": "Username cannot have special characters e.g # * & data to be passed similar to this {'username': 'steven'}"
+                "helpString": "Username cannot have special characters
+                e.g # * & data to be passed similar to this {'username': 'steven'}"
                 }
-            response = Response(json.dumps(invalidUsernameErrorMsg), status=400, mimetype='application/json')
+            response = Response(json.dumps(invalidUsernameErrorMsg),
+                                status=400, mimetype='application/json')
             return response
 
         email = data['email']     
         if not re.match(r"^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})$", email):
             invalidEmailErrorMsg = {
                 "error": "Invalid email passed in request",
-                "helpString": "Email must have @ characters, data to be passed similar to this {'email': 'Jessica@storeapp.co.ke'}"
+                "helpString": "Email must have @ characters, data to be
+                passed similar to this {'email': 'Jessica@storeapp.co.ke'}"
                 }
-            response = Response(json.dumps(invalidEmailErrorMsg), status=400, mimetype='application/json')
+            response = Response(json.dumps(invalidEmailErrorMsg),
+                                status=400, mimetype='application/json')
             return response
 
-        password = data['password']    
+        password = data['password']   
         if not re.match("^[a-zA-Z0-9_]*$", password):
             invalidpasswordErrorMsg = {
                 "error": "Password cannot be blank or have special characters",
-                "helpString": "Enter start password , data to be passed similar this {'password': 'test123'}"
+                "helpString": "Enter start password, data to
+                be passed similar this {'password': 'test123'}"
                 }
-            response = Response(json.dumps(invalidpasswordErrorMsg), status=400, mimetype='application/json')
+            response = Response(json.dumps(invalidpasswordErrorMsg),
+                                status=400, mimetype='application/json')
             return response
         user = UserModel(
             data['username'],
@@ -59,9 +68,9 @@ class Registration(Resource):
 
 class Login(Resource):
     def post(self):
-       
+
         data = request.get_json()
-        username = data['username'] or data['email']
+        username = data['username']
         password = data['password']
 
 #  validate user input
@@ -79,7 +88,8 @@ class Login(Resource):
                 "error": "You are not registered",
                 "helpString": "See your system admin for registration"
                 }
-            response = Response(json.dumps(invalidUserErrorMsg), status=400, mimetype='application/json')
+            response = Response(json.dumps(invalidUserErrorMsg),
+                                status=400, mimetype='application/json')
             return response
 
 # compare user password with stored password in USERS list
@@ -94,7 +104,7 @@ class Login(Resource):
 class Allusers(Resource):
     def get(self):
         user = [user.resultant() for user in ListDatabase.USERS]
-        return{'msg': 'Retrival of all users successul', "users":user}, 200
+        return{'msg': 'Retrival of all users successul', "users": user}, 200
 
 
 class User(Resource):

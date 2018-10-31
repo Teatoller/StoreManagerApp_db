@@ -1,19 +1,24 @@
 from flask import Flask
 from Instance.config import app_config
-from app.api.v2.models.db import salestable, productstable, userstable
+from db import create_tables
+from flask_jwt_extended import JWTManager
 
 # creating the app
+
+jwt = JWTManager()
 
 
 def create_app(config_name='development'):
     app = Flask(__name__)
     app.config.from_object(app_config[config_name])
     app.url_map.strict_slashes = False
-    # salestable()
-    # productstable()
-    # userstable()
+    app_config['JWT_SECRET_KEY'] = "this is my secret"
+    jwt.init_app(app)
 
-    # Use application to name our blueprint
-    from app.api.v1 import version_1 as v1
-    app.register_blueprint(v1)
+    ''' method to create all tables '''
+
+    create_tables()
+
+    from app.api.v2 import version_2 as v2
+    app.register_blueprint(v2)
     return app
