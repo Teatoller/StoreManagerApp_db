@@ -12,7 +12,7 @@ def create_app(config_name='development'):
     app = Flask(__name__)
     app.config.from_object(app_config[config_name])
     app.url_map.strict_slashes = False
-    app_config['JWT_SECRET_KEY'] = "this is my secret"
+    app.config['JWT_SECRET_KEY'] = "this is my secret"
     jwt.init_app(app)
 
     ''' method to create all tables '''

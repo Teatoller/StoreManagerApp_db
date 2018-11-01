@@ -26,9 +26,10 @@ class UserModel():
                     self.password, self.role)
         return cursor.execute(user)
 
-    def get_by_username(self, username, password):
-            query = "SELECT * from users WHERE username='%s' AND password='%s';" % (username, password)
+    
+    def get_by_username(self, username):
+            query = "SELECT * FROM users WHERE username='%s';" % (username,)
             cursor.execute(query)
-            user = cursor.fetchone()
+            user = cursor.fetchone()            
             return user
       

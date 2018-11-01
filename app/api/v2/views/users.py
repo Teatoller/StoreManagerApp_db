@@ -86,13 +86,14 @@ class Login(Resource):
             return {'message': 'password cannot be empty'}, 400
         
         current_user = UserModel()
-        user = current_user.get_by_username(username, password)
+        # user = current_user.get_by_username(username, password)
+        user = current_user.get_by_username(username)
         print(user)
-
+       
         if user:
             if check_password_hash(user['password'], password):
                 exp = datetime.timedelta(minutes=30)
-                access_token = create_access_token(username, exp)                
+                access_token = create_access_token(identity=username)                
                 return make_response(jsonify(access_token=access_token), 200)
         if not user:
             invalidUserErrorMsg = {
