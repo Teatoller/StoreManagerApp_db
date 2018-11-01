@@ -62,32 +62,31 @@ class TestProducts(unittest.TestCase):
     def test_invalid_noname_product_data(self):
         """ """
         response = self.app.post(p1_url,
-                                 data=json.dumps(self.invalid_no_name_product_data),
+                                 data=json.dumps(
+                                     self.invalid_no_name_product_data),
                                  content_type='application/json')
         self.assertEqual(response.status_code, 201)
 
     def test_invalid_no_price_product_data(self):
         """ """
         response = self.app.post(p1_url,
-                                 data=json.dumps(self.invalid_no_price_product_data),
+                                 data=json.dumps(
+                                     self.invalid_no_price_product_data),
                                  content_type='application/json')
         self.assertEqual(response.status_code, 201)
 
     def test_invalid_no_quantity_product_data(self):
         """ """
         response = self.app.post(p1_url,
-                                 data=json.dumps(self.invalid_no_quantity_product_data),
+                                 data=json.dumps(
+                                     self.invalid_no_quantity_product_data),
                                  content_type='application/json')
         self.assertEqual(response.status_code, 201)
 
     def test_invalid_no_category_product_data(self):
         """ """
         response = self.app.post(p1_url,
-                                 data=json.dumps(self.invalid_no_category_product_data),
+                                 data=json.dumps(
+                                     self.invalid_no_category_product_data),
                                  content_type='application/json')
         self.assertEqual(response.status_code, 201)
-
-
-
-
-    
