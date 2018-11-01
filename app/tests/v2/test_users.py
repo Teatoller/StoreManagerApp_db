@@ -80,13 +80,12 @@ class TestUsers(unittest.TestCase):
         "role": "admin"
         }
 
-
     def setUp(self):
         """ Method to call up the tests"""
         app.testing = True
         self.app = app.test_client()
      
-    def test_Signup(self):
+    def test_signup(self):
         """ """
         response = self.app.post(p1_url,
                                  data=json.dumps(self.signup_data),
