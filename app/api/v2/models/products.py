@@ -19,8 +19,8 @@ class ProductModel():
                     self.name, self.price, self.quantity, self.category)
         return cursor.execute(product)
 
-    def get_by_product(self, name, category):
-            query = "SELECT * from products WHERE product='%s' AND category='%s';" % (product, category)
-            cursor.execute(query)
-            product = cursor.fetchone()
-            return product
+    def get_by_product_id(self, id):
+        query = "SELECT * FROM products WHERE product_id={};".format(id)
+        cursor.execute(query)
+        p = cursor.fetchone()
+        return p
