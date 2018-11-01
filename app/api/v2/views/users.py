@@ -1,7 +1,7 @@
 import re
 from flask import Flask, jsonify, request, Response, make_response
 from flask_jwt_extended import create_access_token
-from app.api.v2.models.users import UserModel
+from app.api.v2.models.users import UserModel, get_by_email
 from flask_restful import Resource
 from db import db_connection
 import json
@@ -20,7 +20,7 @@ class Signup(Resource):
         if len(valid_username) < 6:
             invalidUsernameErrorMsg = {
                 "error": "Invalid username passed in request",
-                "helpString": "Username less than six char data to be passed similar to this {'username': 'steven'}"
+                "help": "Username less than six char {'username':'steven'}"
             }
             response = Response(json.dumps(
                 invalidUsernameErrorMsg), status=400, mimetype='application/json')
@@ -31,7 +31,7 @@ class Signup(Resource):
         if not re.match("^[a-zA-Z0-9_]*$", username):
             invalidUsernameErrorMsg = {
                 "error": "Invalid username passed in request",
-                "helpString": "Username cannot have special characters e.g # * & data to be passed similar to this {'username': 'steven'}"
+                "help": "Username cannot have special characters e.g #*& {'username': 'steven9'}"
             }
             response = Response(json.dumps(
                 invalidUsernameErrorMsg), status=400, mimetype='application/json')
@@ -41,17 +41,30 @@ class Signup(Resource):
         if not re.match(r"^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})$", email):
             invalidEmailErrorMsg = {
                 "error": "Invalid email passed in request",
-                "helpString": "Email must have @ characters, data to be passed similar to this {'email': 'Jessica@storeapp.co.ke'}"
+                "helpString": "Email must have @ characters, {'email': 'Jessica@storeapp.co.ke'}"
             }
             response = Response(json.dumps(invalidEmailErrorMsg),
                                 status=400, mimetype='application/json')
+            return responseh("^[a-zA-Z0-9_]*$", username):
+            invalidUsernameErrorMsg = {
+                "error": "Invalid username passed in request",
+                "help": "Username cannot have special characters e.g #*& {'username': 'steven9'}"
+            }
+            response = Response(json.dumps(
+                invalidUsernameErrorMsg), status=400, mimetype='application/json')
+            return response
+        valid_email = get_by_email(email)
+        if valid_email:
+            # this is a duplicate email
+            response = jsonify({"message": "A user with this email exists."})
+            response.status_code = 409
             return response
 
         password = data['password']
         if not re.match("^[a-zA-Z0-9_]*$", password):
             invalidpasswordErrorMsg = {
                 "error": "Password cannot be blank or have special characters",
-                "helpString": "Enter start password , data to be passed similar this {'password': 'test123'}"
+                "help": "Enter start password {'password': 'test123'}"
             }
             response = Response(json.dumps(
                 invalidpasswordErrorMsg), status=400, mimetype='application/json')
