@@ -5,7 +5,7 @@ from db import db_connection
 import json
 
 
-class Products(Resource):
+class Product(Resource):
     def post(self):
         """ Add and validates product that are added """
         data = request.get_json()
@@ -27,10 +27,14 @@ class Products(Resource):
         return make_response(jsonify(
                 {'msg': 'product created succesfully'}), 201)
 
-
-class Product(Resource):
-    def get(self, id):
+    def get(self, id=None):
         """ Gets Single product """
+        if not id:
+            product = ProductModel()
+            products = product.get_all()
+            return {"status": "successful",
+                    "product": products}, 200
+
         product = ProductModel.get_by_product_id(self, id)
         
         if product:
@@ -44,3 +48,11 @@ class Product(Resource):
             return {"status": "successful",
                     "product": format_p}, 200
         return {"status": "unsuccesful!", "msg": "product not found"}
+
+    def delete(self, id):
+        product = ProductModel()
+        product.delete_by_id(id)
+        return make_response(jsonify(
+                {'msg': 'product deleted succesfully'}), 201)
+
+          
