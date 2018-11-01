@@ -87,8 +87,7 @@ class Login(Resource):
         
         current_user = UserModel()
         user = current_user.get_by_username(username, password)
-        print(user)
-
+       
         if user:
             if check_password_hash(user['password'], password):
                 exp = datetime.timedelta(minutes=30)
