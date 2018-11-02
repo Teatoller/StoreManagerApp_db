@@ -7,6 +7,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 class Sale(Resource):
+    @jwt_required
     def post(self):
         """ Add and validates sales that are added """
         data = request.get_json()
@@ -27,7 +28,8 @@ class Sale(Resource):
         sale.savesale()
         return make_response(jsonify(
                 {'msg': 'sale created succesfully'}), 201)
-
+    
+    @jwt_required 
     def get(self, id=None):
         """ Gets Single sale """
         if not id:
@@ -49,7 +51,8 @@ class Sale(Resource):
             return {"status": "successful",
                     "sale": format_p}, 200
         return {"status": "unsuccesful!", "msg": "sale not is viable"}
-
+    
+    @jwt_required
     def put(self, id=None):
         if not id:
             return make_response(jsonify({"msg": "sale is needed"}), 422)
@@ -58,7 +61,8 @@ class Sale(Resource):
 
         if data is not None and not Sale.get_by_sale_id(self, id):
             return make_response(jsonify({"msg": "sale not made"}), 404)
-
+    
+    @jwt_required
     def delete(self, id):
         sale = SaleModel()
         sale.delete_by_id(id)

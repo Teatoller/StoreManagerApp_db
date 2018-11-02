@@ -28,7 +28,8 @@ class Product(Resource):
         product.saveproduct()
         return make_response(jsonify(
                 {'msg': 'product created succesfully'}), 201)
-
+    
+    @jwt_required  
     def get(self, id=None):
         """ Gets Single product """
         if not id:
@@ -50,7 +51,8 @@ class Product(Resource):
             return {"status": "successful",
                     "product": format_p}, 200
         return {"status": "unsuccesful!", "msg": "product not is stock"}
-
+    
+    @jwt_required
     def put(self, id=None):
         if not id:
             return make_response(jsonify({"msg": "inventory is needed"}), 422)
@@ -59,7 +61,8 @@ class Product(Resource):
 
         if data != None and not Product.get_by_product_id(self, id):
             return make_response(jsonify({"msg": "productnot available"}), 404)
-
+    
+    @jwt_required
     def delete(self, id):
         product = ProductModel()
         product.delete_by_id(id)
