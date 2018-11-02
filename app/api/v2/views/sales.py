@@ -1,15 +1,15 @@
 from flask_restful import Resource
 from flask import Flask, jsonify, request, Response, make_response
-from app.api.v2.models.products import ProductModel
+from app.api.v2.models.sales import SaleModel
 from db import db_connection
 import json
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
-class Product(Resource):
+class Sale(Resource):
     @jwt_required
     def post(self):
-        """ Add and validates product that are added """
+        """ Add and validates sales that are added """
         data = request.get_json()
         if 'name' not in data:
             return {"msg": "please input name"}, 406
@@ -20,27 +20,27 @@ class Product(Resource):
         if 'category' not in data:
             return {"msg": "please input category"}, 406
 
-        product = ProductModel(
+        sale = SaleModel(
             data['name'],
             data['price'],
             data['quantity'],
             data['category'])
-        product.saveproduct()
+        sale.savesale()
         return make_response(jsonify(
-                {'msg': 'product created succesfully'}), 201)
+                {'msg': 'sale created succesfully'}), 201)
     
-    @jwt_required  
+    @jwt_required 
     def get(self, id=None):
-        """ Gets Single product """
+        """ Gets Single sale """
         if not id:
-            product = ProductModel()
-            products = product.get_all()
+            sale = SaleModel()
+            sales = sale.get_all()
             return {"status": "successful",
-                    "product": products}, 200
+                    "sale": sales}, 200
 
-        product = ProductModel.get_by_product_id(self, id)
+        sale = SaleModel.get_by_sale_id(self, id)
         
-        if product:
+        if sale:
             format_p = {
                 "id": product[0],
                 "name": product[1],
@@ -49,23 +49,23 @@ class Product(Resource):
                 'category': product[4]
             }
             return {"status": "successful",
-                    "product": format_p}, 200
-        return {"status": "unsuccesful!", "msg": "product not is stock"}
+                    "sale": format_p}, 200
+        return {"status": "unsuccesful!", "msg": "sale not is viable"}
     
     @jwt_required
     def put(self, id=None):
         if not id:
-            return make_response(jsonify({"msg": "inventory is needed"}), 422)
+            return make_response(jsonify({"msg": "sale is needed"}), 422)
         data = request.get_json()
         user = get_jwt_identity
 
-        if data != None and not Product.get_by_product_id(self, id):
-            return make_response(jsonify({"msg": "productnot available"}), 404)
+        if data is not None and not Sale.get_by_sale_id(self, id):
+            return make_response(jsonify({"msg": "sale not made"}), 404)
     
     @jwt_required
     def delete(self, id):
-        product = ProductModel()
-        product.delete_by_id(id)
+        sale = SaleModel()
+        sale.delete_by_id(id)
         return make_response(jsonify(
-                {'msg': 'product deleted succesfully'}), 201)
+                {'msg': 'sale deleted succesfully'}), 201)
           
