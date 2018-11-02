@@ -24,3 +24,13 @@ class ProductModel():
         cursor.execute(query)
         p = cursor.fetchone()
         return p
+        
+    def get_all(self):
+        query = "SELECT * FROM products"
+        cursor.execute(query)
+        return cursor.fetchall()
+
+    def delete_by_id(self, id):
+        query = "DELETE FROM products WHERE product_id={};".format(id)
+        return cursor.execute(query)
+
