@@ -56,7 +56,7 @@ class Sale(Resource):
         data = request.get_json()
         user = get_jwt_identity
 
-        if data != None and not Sale.get_by_sale_id(self, id):
+        if data is not None and not Sale.get_by_sale_id(self, id):
             return make_response(jsonify({"msg": "sale not made"}), 404)
 
     def delete(self, id):
