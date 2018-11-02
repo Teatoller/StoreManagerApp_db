@@ -7,6 +7,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 class Product(Resource):
+    @jwt_required
     def post(self):
         """ Add and validates product that are added """
         data = request.get_json()
