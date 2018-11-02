@@ -56,7 +56,7 @@ class Product(Resource):
         data = request.get_json()
         user = get_jwt_identity
 
-        if data != None and not Product.get_by_product_id(id):
+        if data != None and not Product.get_by_product_id(self, id):
             return make_response(jsonify({"msg": "productnot available"}), 404)
 
     def delete(self, id):
