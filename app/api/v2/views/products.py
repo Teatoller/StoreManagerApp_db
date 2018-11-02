@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request, Response, make_response
 from app.api.v2.models.products import ProductModel
 from db import db_connection
 import json
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 class Product(Resource):
@@ -47,12 +48,20 @@ class Product(Resource):
             }
             return {"status": "successful",
                     "product": format_p}, 200
-        return {"status": "unsuccesful!", "msg": "product not found"}
+        return {"status": "unsuccesful!", "msg": "product not is stock"}
+
+    def put(self, id=None):
+        if not id:
+            return make_response(jsonify({"msg": "inventory is needed"}), 422)
+        data = request.get_json()
+        user = get_jwt_identity
+
+        if data != None and not Product.get_by_product_id(id):
+            return make_response(jsonify({"msg": "productnot available"}), 404)
 
     def delete(self, id):
         product = ProductModel()
         product.delete_by_id(id)
         return make_response(jsonify(
                 {'msg': 'product deleted succesfully'}), 201)
-
           

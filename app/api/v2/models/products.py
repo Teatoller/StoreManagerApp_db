@@ -34,4 +34,3 @@ class ProductModel():
         query = "DELETE FROM products WHERE product_id={};".format(id)
         return cursor.execute(query)
 
-
