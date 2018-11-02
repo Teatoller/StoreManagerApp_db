@@ -9,13 +9,14 @@ install:
  - pip install coveralls
 env:
  - FLASK_VERSION=1.0.2
-before_script:
-  - psql -c "create database test_db;" -U postgres
-  - psql -c "create user user_1;" -U postgres
-script:
- - pytest --cov-report term-missing --cov=app
- - coveralls
 services:
   - postgresql
+before_script:
+  - psql -c "create database storemanager_db;" -U postgres
+  - psql -c "create user user_1;" -U postgres
+script:
+ - export APP_SETTINGS="testing"
+ - pytest --cov-report term-missing --cov=app
+ - coveralls
 after_success:
  - coveralls
