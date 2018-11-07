@@ -12,9 +12,9 @@ env:
 services:
   - postgresql
 before_script:
-  - psql -c "create database storemanager_db;" -U user_1
+  - psql -c "create database storemanager_db;" -U postgres
 
-  - psql -c "create user user_1 WITH PASSWORD 'test123';" -U user_1
+  - psql -c "create user user_1 WITH PASSWORD 'test123';" -U postgres
 script:
  - export APP_SETTINGS="testing" 
  - pytest --cov-report term-missing --cov app -v
