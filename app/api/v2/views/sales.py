@@ -34,9 +34,19 @@ class Sale(Resource):
         """ Gets Single sale """
         if not id:
             sale = SaleModel()
-            sales = SaleModel.get_all(self)        
+            sales = sale.get_all()
+            all_sales = []
+            for s in sales:
+                format_sAll = {
+                    'id': s[0],
+                    'name': s[1],
+                    'price': s[2],
+                    'quantity': s[3],
+                    'category': s[4]
+                    }
+                all_sales.append(format_sAll)
             return {"status": "successful",
-                    "sale": sales}, 200
+                    "sales": all_sales}, 200
 
         sale = SaleModel.get_by_sales_id(self, id)
         

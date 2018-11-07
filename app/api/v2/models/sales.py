@@ -28,7 +28,8 @@ class SaleModel():
     def get_all(self):
         query = "SELECT * FROM sales"
         cursor.execute(query)
-        return cursor.fetchall()
+        all_s = cursor.fetchall()
+        return all_s
 
     def delete_by_sales_id(self, id):
         query = "DELETE FROM sales WHERE sales_id={};".format(id)
