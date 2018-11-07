@@ -1,27 +1,23 @@
 language: python
-
 python:
  - "3.6"
-
 before_install:
  - 'pip install -U pip'
-
+cache: pip
 install:
  - pip install -r requirements.txt
-
+ - pip install coveralls
 env:
  - FLASK_VERSION=1.0.2
-
 services:
   - postgresql
-
 before_script:
-  - psql -c 'create database storemanager_db;' -U postgres
-  - psql -c "create user user_1;" -U postgres
+  - psql -c "create database storemanager_db;" -U postgres
 
+  - psql -c "create user user_1 WITH PASSWORD 'test123';" -U postgres
 script:
- - export APP_SETTINGS="testing"
- - pytest --cov-report term-missing --cov=app
+ - export APP_SETTINGS="testing" 
+ - pytest --cov-report term-missing --cov app -v
  
 after_success:
  - coveralls
