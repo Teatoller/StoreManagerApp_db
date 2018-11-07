@@ -9,7 +9,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 class Sale(Resource):
     @jwt_required
     def post(self):
-        """ Add and validates sales that are added """
+        """ Add and validates sale that is added """
         data = request.get_json()
         if 'name' not in data:
             return {"msg": "please input name"}, 406
@@ -29,28 +29,38 @@ class Sale(Resource):
         return make_response(jsonify(
                 {'msg': 'sale created succesfully'}), 201)
     
-    @jwt_required 
+    @jwt_required  
     def get(self, id=None):
         """ Gets Single sale """
         if not id:
             sale = SaleModel()
             sales = sale.get_all()
+            all_sales = []
+            for s in sales:
+                format_sAll = {
+                    'id': s[0],
+                    'name': s[1],
+                    'price': s[2],
+                    'quantity': s[3],
+                    'category': s[4]
+                    }
+                all_sales.append(format_sAll)
             return {"status": "successful",
-                    "sale": sales}, 200
+                    "sales": all_sales}, 200
 
-        sale = SaleModel.get_by_sale_id(self, id)
+        sale = SaleModel.get_by_sales_id(self, id)
         
         if sale:
-            format_p = {
-                "id": product[0],
-                "name": product[1],
-                "price": product[2],
-                'quantity': product[3],
-                'category': product[4]
+            format_s = {
+                "id": sale[0],
+                "name": sale[1],
+                "price": sale[2],
+                'quantity': sale[3],
+                'category': sale[4]
             }
             return {"status": "successful",
-                    "sale": format_p}, 200
-        return {"status": "unsuccesful!", "msg": "sale not is viable"}
+                    "sale": format_s}, 200
+        return {"status": "unsuccesful!", "msg": "sale not is stock"}
     
     @jwt_required
     def put(self, id=None):
@@ -59,13 +69,13 @@ class Sale(Resource):
         data = request.get_json()
         user = get_jwt_identity
 
-        if data is not None and not Sale.get_by_sale_id(self, id):
-            return make_response(jsonify({"msg": "sale not made"}), 404)
+        if data != None and not Sale.get_by_sales_id(self, id):
+            return make_response(jsonify({"msg": "sale not possible"}), 404)
     
     @jwt_required
     def delete(self, id):
         sale = SaleModel()
-        sale.delete_by_id(id)
+        sale.delete_by_sales_id(id)
         return make_response(jsonify(
                 {'msg': 'sale deleted succesfully'}), 201)
           

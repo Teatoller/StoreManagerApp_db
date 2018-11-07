@@ -35,8 +35,18 @@ class Product(Resource):
         if not id:
             product = ProductModel()
             products = product.get_all()
+            all_products = []
+            for p in products:
+                format_pAll = {
+                    'id': p[0],
+                    'name': p[1],
+                    'price': p[2],
+                    'quantity': p[3],
+                    'category': p[4]
+                    }
+                all_products.append(format_pAll)
             return {"status": "successful",
-                    "product": products}, 200
+                    "products": all_products}, 200
 
         product = ProductModel.get_by_product_id(self, id)
         

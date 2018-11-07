@@ -19,7 +19,7 @@ $ cd StoreManager_db
 
 GET /sales
 
-Get all sale records. This endpoint eill eventually be acc
+Get all sale records.
 $ export FLASK_APP=run.py
 $ flask run
 
@@ -31,7 +31,6 @@ What things you need to install
 $ pip Install Flask
 $ pip install flask-restful
 $ pip instal flask-jwt-extended
-$ pytest --cov-report term-missing --cov=app
 
 A step by step series of examples that tell you how to get a development env running
 
@@ -46,10 +45,10 @@ a. In Postman in the field adjacent tp "PARAM" ENTER 'http://127.0.0.1:5000/api/
 b. In body area on server side use this is the format;
 
 {
-	"name": "Nescafe"
-	"price": 15
-	"quantity": 1
-	"category": "Beverage"
+    "name": "Nescafe"
+    "price": 15
+    "quantity": 1
+    "category": "Beverage"
 }
 
 i. You will get a message that you are not authorized because you are either not registered or you do not have a token.
@@ -69,7 +68,7 @@ iii. Login
     "password": "test123"
 }
 iv. Use the token generated to by;
-a. clicking on header, check the Authorization box, inline just under value type Bearer <enter token>
+a. clicking on header, check the Authorization box, inline just under value type Bearer <'token'>
 
 c. The products will display on the browser side of Postman and get posted in the database.
 
@@ -85,8 +84,7 @@ NB. Ensure the content-header JSON(application/json)
 
 This are the endpoint routes you may want to try:
 
-#### Prefix
-* '/api/v2'
+Prefix '/api/v2'
 
 #### Signup and login endpoints
 '/auth/signup'
@@ -104,7 +102,7 @@ This are the endpoint routes you may want to try:
 
 #### Fetch a single product record
 Get a specific product using the product’s id.
-GET /<products/<int:Id>
+GET /<'products/<int:Id>
 
 Versioning
 This is v2 built with Flask restful

@@ -19,17 +19,19 @@ class SaleModel():
                     self.name, self.price, self.quantity, self.category)
         return cursor.execute(sale)
 
-    def get_by_sale_id(self, id):
-        query = "SELECT * FROM sales WHERE sale_id={};".format(id)
+    def get_by_sales_id(self, id):
+        query = "SELECT * FROM sales WHERE sales_id={};".format(id)
         cursor.execute(query)
-        p = cursor.fetchone()
-        return p
+        s = cursor.fetchone()
+        return s
         
     def get_all(self):
         query = "SELECT * FROM sales"
         cursor.execute(query)
-        return cursor.fetchall()
+        all_s = cursor.fetchall()
+        return all_s
 
-    def delete_by_id(self, id):
-        query = "DELETE FROM sales WHERE sale_id={};".format(id)
+    def delete_by_sales_id(self, id):
+        query = "DELETE FROM sales WHERE sales_id={};".format(id)
         return cursor.execute(query)
+
