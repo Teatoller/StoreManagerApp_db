@@ -60,7 +60,7 @@ class Sale(Resource):
             }
             return {"status": "successful",
                     "sale": format_s}, 200
-        return {"status": "unsuccesful!", "msg": "sale not is stock"}
+        return {"status": "unsuccesful!", "msg": "sale not in record"}
     
     @jwt_required
     def put(self, id=None):
