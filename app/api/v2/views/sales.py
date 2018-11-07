@@ -34,7 +34,7 @@ class Sale(Resource):
         """ Gets Single sale """
         if not id:
             sale = SaleModel()
-            sales = sale.get_all()
+            sales = SaleModel.get_all(self)        
             return {"status": "successful",
                     "sale": sales}, 200
 

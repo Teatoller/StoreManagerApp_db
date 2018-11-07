@@ -3,20 +3,24 @@ language: python
 python:
  - "3.6"
 
+before_install:
+ - 'pip install -U pip'
+
 install:
  - pip install -r requirements.txt
 
- - pip install coveralls
 env:
  - FLASK_VERSION=1.0.2
+
 services:
   - postgresql
+
 before_script:
-  - psql -c "create database storemanager_db;" -U postgres
-  - psql -c "create user user_1;" -U postgres
+  - psql -c 'create database test_db;' -U user_1
+
 script:
  - export APP_SETTINGS="testing"
- - pytest --cov-report term-missing --cov=app
- - coveralls
+ - coverage run --source=app -m pytest && coverage report
+ 
 after_success:
  - coveralls
