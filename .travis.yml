@@ -17,6 +17,6 @@ before_script:
   - psql -c "create user user_1 WITH PASSWORD 'test123';" -U postgres
 script:
  - export APP_SETTINGS="testing" 
- - py.test --cov-report term-missing --cov app -v 
+ - pytest --cov-report term-missing --cov app -v 
 after_success:
  - coveralls
