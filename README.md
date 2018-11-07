@@ -1,14 +1,14 @@
 # StoreManagerApp_db
 Store Manager is a web application that helps store owners manage sales and product inventory records.
-[![Build Status](https://travis-ci.org/Teatoller/StoreManagerApp_db.svg?branch=Bg-Debug-Travis-build-161777042)](https://travis-ci.org/Teatoller/StoreManagerApp_db) [![Coverage Status](https://coveralls.io/repos/github/Teatoller/StoreManagerApp_db/badge.svg?branch=ft-Add-Sale-endpoints-161650429)](https://coveralls.io/github/Teatoller/StoreManagerApp_db?branch=ft-Add-Sale-endpoints-161650429) [![Maintainability](https://api.codeclimate.com/v1/badges/6ab555b0a04d536d0a1e/maintainability)](https://codeclimate.com/github/Teatoller/StoreManagerApp_db/maintainability)
+[![Build Status](https://travis-ci.org/Teatoller/StoreManagerApp_db.svg?branch=develop)](https://travis-ci.org/Teatoller/StoreManagerApp_db) [![Coverage Status](https://coveralls.io/repos/github/Teatoller/StoreManagerApp_db/badge.svg?branch=ft-Add-Sale-endpoints-161650429)](https://coveralls.io/github/Teatoller/StoreManagerApp_db?branch=ft-Add-Sale-endpoints-161650429) [![Maintainability](https://api.codeclimate.com/v1/badges/6ab555b0a04d536d0a1e/maintainability)](https://codeclimate.com/github/Teatoller/StoreManagerApp_db/maintainability)
 
-#### Getting Started
+## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 
 Installation
 The development version can be downloaded from its page at GitHub.
 
-#### Create a project folder and a env folder within:
+### Create a project folder and a env folder within:
 
 $ mkdir myproject
 $ cd myproject
