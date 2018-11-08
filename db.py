@@ -5,12 +5,15 @@ import os
 app_config = os.getenv('APP_SETTINGS')
 development_url = os.getenv('development_url')
 release_url = os.getenv('release_url')
+testing_url = os.getenv('testing_url')
 
 
 def db_connection():
         try:
                 if app_config == 'development':
-                        connection = psycopg2.connect(development_url)                
+                        connection = psycopg2.connect(development_url)
+                if app_config == 'testing':
+                        connection = psycopg2.connect(testing_url)                
                 if app_config == 'release':
                         connection = psycopg2.connect(release_url)
                 connection.autocommit = True
