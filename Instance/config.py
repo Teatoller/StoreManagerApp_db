@@ -25,7 +25,6 @@ class ReleaseConfig(Config):
     DEBUG = False
     TESTING = False
 
-
 #  config Dictionary in key value pairs
 app_config = {
     'development': DevelopmentConfig,
