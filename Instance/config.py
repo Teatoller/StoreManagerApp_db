@@ -7,7 +7,7 @@ import os
 class Config(object):
     """Parent configuration class."""
     DEBUG = False
-
+  
 
 class DevelopmentConfig(Config):
     """Development phase configurations"""
@@ -24,7 +24,6 @@ class ReleaseConfig(Config):
     """Release Configurations."""
     DEBUG = False
     TESTING = False
-
 
 #  config Dictionary in key value pairs
 app_config = {
