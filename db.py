@@ -6,7 +6,7 @@ user = os.getenv('USER')
 password = os.getenv('PASSWORD')
 host = os.getenv('HOST')
 port = os.getenv('PORT')
-database = os.getenv('DATABASE')
+dbname = os.getenv('DATABASE')
 
 
 def db_connection():
@@ -15,7 +15,7 @@ def db_connection():
                                               password=password,
                                               host=host,
                                               port=port,
-                                              database=database)
+                                              dbname=dbname)
                 connection.autocommit = True
                 return connection
         except (Exception, psycopg2.DatabaseError) as error:
