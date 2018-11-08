@@ -2,20 +2,17 @@ import psycopg2
 from psycopg2 import Error
 import os
 
-user = os.getenv('USER')
-password = os.getenv('PASSWORD')
-host = os.getenv('HOST')
-port = os.getenv('PORT')
-dbname = os.getenv('DATABASE')
+app_config = os.getenv('APP_SETTINGS')
+development_url = os.getenv('development_url')
+release_url = os.getenv('release_url')
 
 
 def db_connection():
         try:
-                connection = psycopg2.connect(user=user,
-                                              password=password,
-                                              host=host,
-                                              port=port,
-                                              dbname=dbname)
+                if app_config == 'development':
+                        connection = psycopg2.connect(development_url)                
+                if app_config == 'release':
+                        connection = psycopg2.connect(release_url)
                 connection.autocommit = True
                 return connection
         except (Exception, psycopg2.DatabaseError) as error:
