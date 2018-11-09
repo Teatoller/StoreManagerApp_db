@@ -28,8 +28,8 @@ class Sale(Resource):
         sale.savesale()
         return make_response(jsonify(
                 {'msg': 'sale created succesfully'}), 201)
-    
-    @jwt_required  
+
+    @jwt_required
     def get(self, id=None):
         """ Gets Single sale """
         if not id:
@@ -49,7 +49,7 @@ class Sale(Resource):
                     "sales": all_sales}, 200
 
         sale = SaleModel.get_by_sales_id(self, id)
-        
+
         if sale:
             format_s = {
                 "id": sale[0],
@@ -61,7 +61,7 @@ class Sale(Resource):
             return {"status": "successful",
                     "sale": format_s}, 200
         return {"status": "unsuccesful!", "msg": "sale not in record"}
-    
+
     @jwt_required
     def put(self, id=None):
         if not id:
@@ -69,13 +69,12 @@ class Sale(Resource):
         data = request.get_json()
         user = get_jwt_identity
 
-        if data != None and not Sale.get_by_sales_id(self, id):
+        if data is not None and not Sale.get_by_sales_id(self, id):
             return make_response(jsonify({"msg": "sale not possible"}), 404)
-    
+
     @jwt_required
     def delete(self, id):
         sale = SaleModel()
         sale.delete_by_sales_id(id)
         return make_response(jsonify(
                 {'msg': 'sale deleted succesfully'}), 201)
-          

@@ -13,7 +13,7 @@ def db_connection():
                 if config_name == 'development':
                         connection = psycopg2.connect(development_url)
                 if config_name == 'testing':
-                        connection = psycopg2.connect(testing_url)                
+                        connection = psycopg2.connect(testing_url)
                 if config_name == 'release':
                         connection = psycopg2.connect(release_url)
                 connection.autocommit = True
@@ -24,15 +24,15 @@ def db_connection():
 
 def create_tables():
         cursor = db_connection().cursor()
-      
-        sales_table = """ 
+
+        sales_table = """
                         CREATE TABLE IF NOT EXISTS sales
                         (sales_id serial PRIMARY KEY,
                         name varchar(255),
                         price varchar(255),
                         quantity varchar(255),
                         category varchar(255));"""
-   
+
         product_stable = """
                         CREATE TABLE IF NOT EXISTS products
                         (product_id serial PRIMARY KEY,
@@ -52,7 +52,6 @@ def create_tables():
                         role character varying(250));"""
 
         tables = [users_table, product_stable, sales_table]
-               
+
         for table in tables:
                 cursor.execute(table)
-

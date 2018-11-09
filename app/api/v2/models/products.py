@@ -12,7 +12,7 @@ class ProductModel():
         self.price = price
         self.quantity = quantity
         self.category = category
-        
+
     def saveproduct(self):
         product = "INSERT INTO products(name, price, quantity, category)\
                    VALUES('%s','%s', '%s', '%s')" % (
@@ -24,7 +24,7 @@ class ProductModel():
         cursor.execute(query)
         p = cursor.fetchone()
         return p
-        
+
     def get_all(self):
         query = "SELECT * FROM products"
         cursor.execute(query)
@@ -33,4 +33,3 @@ class ProductModel():
     def delete_by_id(self, id):
         query = "DELETE FROM products WHERE product_id={};".format(id)
         return cursor.execute(query)
-
