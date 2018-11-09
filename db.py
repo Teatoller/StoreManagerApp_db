@@ -2,18 +2,18 @@ import psycopg2
 from psycopg2 import Error
 import os
 
-app_config = os.getenv('APP_SETTINGS')
+config_name = os.getenv('APP_SETTINGS')
 development_url = os.getenv('development_url')
 release_url = os.getenv('release_url')
 
 
 def db_connection():
         try:
-                if app_config == 'development':
+                if config_name == 'development':
                         connection = psycopg2.connect(development_url)
-                if app_config == 'testing':
+                if config_name == 'testing':
                         connection = psycopg2.connect(development_url)                
-                if app_config == 'release':
+                if config_name == 'release':
                         connection = psycopg2.connect(release_url)
                 connection.autocommit = True
                 return connection
