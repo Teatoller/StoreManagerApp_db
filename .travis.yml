@@ -12,7 +12,7 @@ env:
 services:
   - postgresql
 before_script:
-  - psql -c "create database storemanager_db;" -U postgres
+  - psql -c "create dbname storemanager_db;" -U postgres
 
   - psql -c "create user user_1 WITH PASSWORD 'test123';" -U postgres
 script:
