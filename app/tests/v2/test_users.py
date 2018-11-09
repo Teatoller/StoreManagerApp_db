@@ -139,5 +139,5 @@ class TestUsers(unittest.TestCase):
         response = self.app.post(p2_url,
                                  data=json.dumps(self.login_data),
                                  content_type='application/json')
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 200)
 
