@@ -10,6 +10,11 @@ install:
  - pip install codeclimate-test-reporter
 env:
  - FLASK_VERSION=1.0.2
+ - FLASK_APP='run.py'
+ - FLASK_ENV='development'
+ - APP_SETTINGS='development'
+ - development_url='dbname=storemanager_db user=user_1 password=test123 host=localhost port=5432'
+ - testing_url='dbname=test_db user=user_1 password=test123 host=localhost port=5432'
 services:
   - postgresql
 before_script:
