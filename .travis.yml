@@ -7,17 +7,18 @@ cache: pip
 install:
  - pip install -r requirements.txt
  - pip install coveralls
+ - pip install codeclimate-test-reporter
 env:
  - FLASK_VERSION=1.0.2
 services:
   - postgresql
 before_script:
-  - psql -c "create dbname storemanager_db;" -U postgres
-
-  - psql -c "create user user_1 WITH PASSWORD 'test123';" -U postgres
+  - psql -c 'create database storemanager_db;' -U postgres
+  - psql -c 'create user user_1 WITH PASSWORD 'test123';' -U postgres
+  - cp config/database.yml.travis config/database.yml
 script:
  - export APP_SETTINGS="testing" 
- - pytest --cov-report term-missing --cov app -v
- 
+ - pytest --cov-report term-missing --cov app -v 
 after_success:
  - coveralls
+ - codeclimate-test-reporter
