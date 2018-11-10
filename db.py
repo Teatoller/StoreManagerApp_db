@@ -20,7 +20,9 @@ def db_connection():
                 connection.autocommit = True
                 return connection
         except (Exception, psycopg2.DatabaseError) as error:
-                return "Error while connecting to PostgreSQL", error
+                print('Databse error encountered trying to reconnect again...')
+                connection = psycopg2.connect(DATABASE_TEST_URL)
+                return connection
 
 
 def create_tables():
