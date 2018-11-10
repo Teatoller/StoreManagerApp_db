@@ -1,6 +1,7 @@
 import unittest
 from flask import json
 from app import create_app
+from db import create_tables
 
 config_name = "testing"
 app = create_app(config_name)
@@ -50,6 +51,7 @@ class TestProducts(unittest.TestCase):
     def setUp(self):
         """ Method to call up the tests"""
         app.testing = True
+        create_tables()
         self.app = app.test_client()
      
     def test_product_data(self):
