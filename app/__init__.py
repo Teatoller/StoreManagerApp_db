@@ -8,7 +8,7 @@ from flask_jwt_extended import (JWTManager, jwt_required, get_raw_jwt)
 jwt = JWTManager()
 
 
-def create_app(config_name='development'):
+def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(app_config[config_name])
     app.url_map.strict_slashes = False

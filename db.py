@@ -1,6 +1,7 @@
 import psycopg2
 from psycopg2 import Error
 import os
+from Instance.config import app_config
 
 config_name = os.getenv('APP_SETTINGS')
 DATABASE_URL = os.getenv('DATABASE_URL')
