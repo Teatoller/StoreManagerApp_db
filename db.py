@@ -4,24 +4,24 @@ import os
 from Instance.config import app_config
 
 config_name = os.getenv('APP_SETTINGS')
-DATABASE_URL = os.getenv('DATABASE_URL')
-DATABASE_TEST_URL = os.getenv('DATABASE_TEST_URL')
+db_url = os.getenv('DATABASE_URL')
+db_test_url = os.getenv('DATABASE_TEST_URL')
 release_url = os.getenv('release_url')
 
 
 def db_connection():
         try:
                 if config_name == 'development':
-                        connection = psycopg2.connect(DATABASE_URL)
+                        connection = psycopg2.connect(db_url)
                 elif config_name == 'testing':
-                        connection = psycopg2.connect(DATABASE_TEST_URL)
+                        connection = psycopg2.connect(db_test_url)
                 else:
                         connection = psycopg2.connect(release_url)
                 connection.autocommit = True
                 return connection
         except (Exception, psycopg2.DatabaseError) as error:
                 print('Databse error encountered trying to reconnect again...')
-                connection = psycopg2.connect(DATABASE_TEST_URL)
+                connection = psycopg2.connect(db_test_url)
                 return connection
 
 
