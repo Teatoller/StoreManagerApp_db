@@ -92,7 +92,7 @@ class TestUsers(unittest.TestCase):
         response = self.app.post(p1_url,
                                  data=json.dumps(self.signup_data),
                                  content_type='application/json')
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 201)
 
     def test_invalidsignup_data(self):
         """ """
@@ -141,5 +141,5 @@ class TestUsers(unittest.TestCase):
         response = self.app.post(p2_url,
                                  data=json.dumps(self.login_data),
                                  content_type='application/json')
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 401)
 
