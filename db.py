@@ -12,14 +12,14 @@ def db_connection():
         try:
                 if config_name == 'development':
                         connection = psycopg2.connect(DATABASE_URL)
-                if config_name == 'testing':
+                elif config_name == 'testing':
                         connection = psycopg2.connect(DATABASE_TEST_URL)
-                if config_name == 'release':
+                else:
                         connection = psycopg2.connect(release_url)
                 connection.autocommit = True
                 return connection
         except (Exception, psycopg2.DatabaseError) as error:
-                print("Error while connecting to PostgreSQL", error)
+                return "Error while connecting to PostgreSQL", error
 
 
 def create_tables():
