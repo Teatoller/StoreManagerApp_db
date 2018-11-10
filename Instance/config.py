@@ -7,11 +7,15 @@ import os
 class Config(object):
     """Parent configuration class."""
     DEBUG = False
+    DATABASE_URL = os.getenv("DATABASE_URL")
   
 
 class DevelopmentConfig(Config):
     """Development phase configurations"""
+    TESTING = True
     DEBUG = True
+    DATABASE_URL = os.getenv("DATABASE_TEST_URL")
+    PRESERVE_CONTEXT_ON_EXCEPTION = True
 
 
 class TestingConfig(Config):
