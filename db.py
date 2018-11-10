@@ -2,16 +2,19 @@ import psycopg2
 from psycopg2 import Error
 import os
 
-app_config = os.getenv('APP_SETTINGS')
+config_name = os.getenv('APP_SETTINGS')
 development_url = os.getenv('development_url')
+testing_url = os.getenv('testing_url')
 release_url = os.getenv('release_url')
 
 
 def db_connection():
         try:
-                if app_config == 'development':
-                        connection = psycopg2.connect(development_url)                
-                if app_config == 'release':
+                if config_name == 'development':
+                        connection = psycopg2.connect(development_url)
+                if config_name == 'testing':
+                        connection = psycopg2.connect(testing_url)
+                if config_name == 'release':
                         connection = psycopg2.connect(release_url)
                 connection.autocommit = True
                 return connection
@@ -21,15 +24,15 @@ def db_connection():
 
 def create_tables():
         cursor = db_connection().cursor()
-      
-        sales_table = """ 
+
+        sales_table = """
                         CREATE TABLE IF NOT EXISTS sales
                         (sales_id serial PRIMARY KEY,
                         name varchar(255),
                         price varchar(255),
                         quantity varchar(255),
                         category varchar(255));"""
-   
+
         product_stable = """
                         CREATE TABLE IF NOT EXISTS products
                         (product_id serial PRIMARY KEY,
@@ -49,7 +52,6 @@ def create_tables():
                         role character varying(250));"""
 
         tables = [users_table, product_stable, sales_table]
-               
+
         for table in tables:
                 cursor.execute(table)
-

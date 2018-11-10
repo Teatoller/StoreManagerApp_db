@@ -12,7 +12,7 @@ class SaleModel():
         self.price = price
         self.quantity = quantity
         self.category = category
-        
+
     def savesale(self):
         sale = "INSERT INTO sales(name, price, quantity, category)\
                    VALUES('%s','%s', '%s', '%s')" % (
@@ -24,7 +24,7 @@ class SaleModel():
         cursor.execute(query)
         s = cursor.fetchone()
         return s
-        
+
     def get_all(self):
         query = "SELECT * FROM sales"
         cursor.execute(query)
@@ -34,4 +34,3 @@ class SaleModel():
     def delete_by_sales_id(self, id):
         query = "DELETE FROM sales WHERE sales_id={};".format(id)
         return cursor.execute(query)
-

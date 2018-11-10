@@ -16,4 +16,3 @@ api.add_resource(Product, '/products', endpoint="get all and post product")
 api.add_resource(Product, '/products/<int:id>', endpoint="specific product")
 api.add_resource(Sale, '/sales', endpoint="get all and post sale")
 api.add_resource(Sale, '/sales/<int:id>', endpoint="specific sale")
-

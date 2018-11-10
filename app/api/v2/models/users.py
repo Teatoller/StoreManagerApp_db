@@ -29,12 +29,12 @@ class UserModel():
     def get_by_username(self, username):
         query = "SELECT * FROM users WHERE username='%s';" % (username,)
         cursor.execute(query)
-        user = cursor.fetchone()            
+        user = cursor.fetchone()
         return user
 
 
 def get_by_email(email):
     query = "SELECT * FROM users WHERE email='%s';" % (email,)
     cursor.execute(query)
-    user = cursor.fetchone()            
+    user = cursor.fetchone()
     return user

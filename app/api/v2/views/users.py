@@ -20,7 +20,7 @@ class Signup(Resource):
         if len(valid_username) < 6:
             invalidUsernameErrorMsg = {
                 "error": "Invalid username passed in request",
-                "helpString": "Username less than six char data to be passed similar to this {'username': 'steven'}"
+                "helpString": "Username less than six char, sample {'username': 'steven'}"
             }
             response = Response(json.dumps(
                 invalidUsernameErrorMsg), status=400, mimetype='application/json')
@@ -31,7 +31,7 @@ class Signup(Resource):
         if not re.match("^[a-zA-Z0-9_]*$", username):
             invalidUsernameErrorMsg = {
                 "error": "Invalid username passed in request",
-                "helpString": "Username cannot have special characters e.g # * & data to be passed similar to this {'username': 'steven'}"
+                "helpString": "Sample, no special char e.g #*& {'username': 'steven'}"
             }
             response = Response(json.dumps(
                 invalidUsernameErrorMsg), status=400, mimetype='application/json')
@@ -41,7 +41,7 @@ class Signup(Resource):
         if not re.match(r"^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})$", email):
             invalidEmailErrorMsg = {
                 "error": "Invalid email passed in request",
-                "helpString": "Email must have @ characters, data to be passed similar to this {'email': 'Jessica@storeapp.co.ke'}"
+                "helpString": "Email must have @ character {'email': 'Jessica@storeapp.co.ke'}"
             }
             response = Response(json.dumps(invalidEmailErrorMsg),
                                 status=400, mimetype='application/json')
@@ -51,7 +51,7 @@ class Signup(Resource):
         if not re.match("^[a-zA-Z0-9_]*$", password):
             invalidpasswordErrorMsg = {
                 "error": "Password cannot be blank or have special characters",
-                "helpString": "Enter start password , data to be passed similar this {'password': 'test123'}"
+                "helpString": "Enter password, sample {'password': 'test123'}"
             }
             response = Response(json.dumps(
                 invalidpasswordErrorMsg), status=400, mimetype='application/json')
@@ -84,16 +84,16 @@ class Login(Resource):
 
         if not password:
             return {'message': 'password cannot be empty'}, 400
-        
+
         current_user = UserModel()
         # user = current_user.get_by_username(username, password)
         user = current_user.get_by_username(username)
         print(user)
-       
+
         if user:
             if check_password_hash(user['password'], password):
                 exp = datetime.timedelta(minutes=30)
-                access_token = create_access_token(identity=username)                
+                access_token = create_access_token(identity=username)
                 return make_response(jsonify(access_token=access_token), 200)
         if not user:
             invalidUserErrorMsg = {
@@ -103,7 +103,7 @@ class Login(Resource):
             response = Response(json.dumps(invalidUserErrorMsg),
                                 status=400, mimetype='application/json')
             return response
-        
+
 
 class Logoutaccess(Resource):
     """Docstring revokes current user token """
