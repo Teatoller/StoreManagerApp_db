@@ -58,4 +58,3 @@ def create_tables():
 
         for table in tables:
                 cursor.execute(table)
-                # cursor.commit()
