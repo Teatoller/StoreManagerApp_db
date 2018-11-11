@@ -85,6 +85,9 @@ class TestUsers(unittest.TestCase):
         """ Method to call up the tests"""
         app.testing = True
         self.app = app.test_client()
+        self.app.post(p1_url,
+                      data=json.dumps(self.signup_data),
+                      content_type='application/json')
 
     def test_signup(self):
         """ """
