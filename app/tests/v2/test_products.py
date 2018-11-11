@@ -24,14 +24,14 @@ class TestProducts(unittest.TestCase):
         "name": "",
         "price": 167,
         "quantity": 2,
-        "category": "Salad"        
+        "category": "Salad"
         }
 
     invalid_no_price_product_data = {
         "name": "",
         "price": 167,
         "quantity": 2,
-        "category": "Salad"        
+        "category": "Salad"
         }
 
     invalid_no_quantity_product_data = {
@@ -45,22 +45,21 @@ class TestProducts(unittest.TestCase):
         "name": "",
         "price": 167,
         "quantity": 2,
-        "category": "Salad"        
+        "category": "Salad"
         }
-    
+
     def setUp(self):
         """ Method to call up the tests"""
         app.testing = True
-        # create_tables()
         self.app = app.test_client()
-     
+
     def test_product_data(self):
         """ """
         response = self.app.post(p1_url,
                                  data=json.dumps(self.product_data),
                                  content_type='application/json')
         self.assertEqual(response.status_code, 401)
-    
+
     def test_invalid_noname_product_data(self):
         """ """
         response = self.app.post(p1_url,
