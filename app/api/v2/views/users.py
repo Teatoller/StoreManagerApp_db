@@ -1,12 +1,15 @@
 import re
 from flask import Flask, jsonify, request, Response, make_response
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import (JWTManager, jwt_required, get_jwt_identity,
+                                create_access_token, create_refresh_token,
+                                jwt_refresh_token_required, get_raw_jwt)
 from app.api.v2.models.users import UserModel
 from flask_restful import Resource
 from db import db_connection
 import json
 from werkzeug.security import check_password_hash
 import datetime
+from app.__init__ import jwt
 
 
 class Signup(Resource):
@@ -73,6 +76,14 @@ class Signup(Resource):
 
 
 class Login(Resource):
+
+    blacklist = set()
+
+    @jwt.token_in_blacklist_loader(callable)
+    def check_if_token_in_blacklist(decrypted_token):
+        jti = decrypted_token['jti']
+        return jti in blacklist
+    
     def post(self):
         data = request.get_json()
         username = data['username']
@@ -104,20 +115,22 @@ class Login(Resource):
                                 status=400, mimetype='application/json')
             return response
 
-
-class Logoutaccess(Resource):
-    """Docstring revokes current user token """
-
-    def post(self):
-        jti = get_raw_jwt()['jti']
-        blackedlist.add(jti)
-        return jsonify({'message': 'User logout successful'}), 200
+    @jwt_refresh_token_required
+    def refresh():
+        current_user = get_jwt_identity
+        ret = {'access_token': create_access_token(identity=current_user)}
+        return jsonify(ret), 200
 
 
-class Logoutrefresh(Resource):
-    """Docstring prevents use of blacklisted tokens """
-
+class Logout(Resource):
+    @jwt_required
     def delete(self):
         jti = get_raw_jwt()['jti']
-        blackedlist.add(jti)
+        blacklist.add(jti)
+        return jsonify({'message': 'User logout successful'}), 200
+
+    @jwt_refresh_token_required
+    def delete(self):
+        jti = get_raw_jwt()['jti']
+        blacklist.add(jti)
         return jsonify({'message': 'User logout successful'}), 200

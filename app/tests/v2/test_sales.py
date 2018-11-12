@@ -6,42 +6,42 @@ from db import create_tables
 config_name = "testing"
 app = create_app(config_name)
 
-p1_url = 'api/v2/products'
-p2_url = 'api/v2/products/<int:id>'
+p1_url = 'api/v2/sales'
+p2_url = 'api/v2/sales/<int:id>'
 
 
-class TestProducts(unittest.TestCase):
+class TestSales(unittest.TestCase):
     """ Users Testing Module """
 
-    product_data = {
+    sale_data = {
         "name": "Elianto",
         "price": 167,
         "quantity": 2,
-        "category": "Salad"        
+        "category": "Salad"
         }
 
-    invalid_no_name_product_data = {
+    invalid_no_name_sale_data = {
         "name": "",
         "price": 167,
         "quantity": 2,
         "category": "Salad"
         }
 
-    invalid_no_price_product_data = {
+    invalid_no_price_sale_data = {
         "name": "",
         "price": 167,
         "quantity": 2,
         "category": "Salad"
         }
 
-    invalid_no_quantity_product_data = {
+    invalid_no_quantity_sale_data = {
         "name": "",
         "price": 167,
         "quantity": 2,
-        "category": "Salad"        
+        "category": "Salad"
         }
 
-    invalid_no_category_product_data = {
+    invalid_no_category_sale_data = {
         "name": "",
         "price": 167,
         "quantity": 2,
@@ -53,41 +53,41 @@ class TestProducts(unittest.TestCase):
         app.testing = True
         self.app = app.test_client()
 
-    def test_product_data(self):
+    def test_sale_data(self):
         """ """
         response = self.app.post(p1_url,
-                                 data=json.dumps(self.product_data),
+                                 data=json.dumps(self.sale_data),
                                  content_type='application/json')
         self.assertEqual(response.status_code, 401)
 
-    def test_invalid_noname_product_data(self):
+    def test_invalid_noname_sale_data(self):
         """ """
         response = self.app.post(p1_url,
                                  data=json.dumps(
-                                     self.invalid_no_name_product_data),
+                                     self.invalid_no_name_sale_data),
                                  content_type='application/json')
         self.assertEqual(response.status_code, 401)
 
-    def test_invalid_no_price_product_data(self):
+    def test_invalid_no_price_sale_data(self):
         """ """
         response = self.app.post(p1_url,
                                  data=json.dumps(
-                                     self.invalid_no_price_product_data),
+                                     self.invalid_no_price_sale_data),
                                  content_type='application/json')
         self.assertEqual(response.status_code, 401)
 
-    def test_invalid_no_quantity_product_data(self):
+    def test_invalid_no_quantity_sale_data(self):
         """ """
         response = self.app.post(p1_url,
                                  data=json.dumps(
-                                     self.invalid_no_quantity_product_data),
+                                     self.invalid_no_quantity_sale_data),
                                  content_type='application/json')
         self.assertEqual(response.status_code, 401)
 
-    def test_invalid_no_category_product_data(self):
+    def test_invalid_no_category_sale_data(self):
         """ """
         response = self.app.post(p1_url,
                                  data=json.dumps(
-                                     self.invalid_no_category_product_data),
+                                     self.invalid_no_category_sale_data),
                                  content_type='application/json')
         self.assertEqual(response.status_code, 401)
