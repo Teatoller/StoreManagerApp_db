@@ -9,6 +9,10 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 class Product(Resource):
     @jwt_required
     def post(self):
+        user_detail = UserModel().get_by_username(get_jwt_identity())
+        if user_detail['role'] == "user":
+            return{'msg': 'not authorised access denied'}, 401
+
         """ Add and validates product that are added """
         data = request.get_json()
         if 'name' not in data:
