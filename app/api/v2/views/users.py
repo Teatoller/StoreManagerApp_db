@@ -9,11 +9,18 @@ from db import db_connection
 import json
 from werkzeug.security import check_password_hash
 import datetime
-from app.__init__ import jwt
+# from app.__init__ import jwt
+from app.__init__ import blacklist
+blacklist = set()
 
 
 class Signup(Resource):
+    @jwt_required
     def post(self):
+        user_detail = UserModel().get_by_username(get_jwt_identity())
+        if user_detail['role'] == "user":
+            return{'msg': 'not authorised access denied'}, 401
+
         data = request.get_json()
         firstname = data['firstname']
         lastname = data['lastname']
@@ -77,13 +84,6 @@ class Signup(Resource):
 
 class Login(Resource):
 
-    blacklist = set()
-
-    @jwt.token_in_blacklist_loader(callable)
-    def check_if_token_in_blacklist(decrypted_token):
-        jti = decrypted_token['jti']
-        return jti in blacklist
-    
     def post(self):
         data = request.get_json()
         username = data['username']
@@ -97,7 +97,7 @@ class Login(Resource):
             return {'message': 'password cannot be empty'}, 400
 
         current_user = UserModel()
-        # user = current_user.get_by_username(username, password)
+        user = current_user.get_by_username(username, password)
         user = current_user.get_by_username(username)
         print(user)
 
@@ -115,22 +115,12 @@ class Login(Resource):
                                 status=400, mimetype='application/json')
             return response
 
-    @jwt_refresh_token_required
-    def refresh():
-        current_user = get_jwt_identity
-        ret = {'access_token': create_access_token(identity=current_user)}
-        return jsonify(ret), 200
-
 
 class Logout(Resource):
     @jwt_required
     def delete(self):
         jti = get_raw_jwt()['jti']
+        print(blacklist)
         blacklist.add(jti)
-        return jsonify({'message': 'User logout successful'}), 200
-
-    @jwt_refresh_token_required
-    def delete(self):
-        jti = get_raw_jwt()['jti']
-        blacklist.add(jti)
-        return jsonify({'message': 'User logout successful'}), 200
+        print(blacklist)
+        return jsonify({'message': 'User logout successful'}, 200)
