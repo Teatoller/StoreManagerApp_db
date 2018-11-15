@@ -9,6 +9,10 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 class Sale(Resource):
     @jwt_required
     def post(self):
+        user_detail = UserModel().get_by_username(get_jwt_identity())
+        if user_detail['role'] == "admin":
+            return{'msg': 'Access denied, only for Store attendants'}, 401
+
         """ Add and validates sale that is added """
         data = request.get_json()
         if 'name' not in data:

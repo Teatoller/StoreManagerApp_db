@@ -7,6 +7,7 @@ import os
 class Config(object):
     """Parent configuration class."""
     DEBUG = False
+    CSRF_ENABLED = False
     DATABASE_URL = os.getenv("DATABASE_URL")
 
 

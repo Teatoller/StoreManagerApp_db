@@ -98,42 +98,42 @@ class TestUsers(unittest.TestCase):
         response = self.app.post(p1_url,
                                  data=json.dumps(self.invalidsignup_data),
                                  content_type='application/json')
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 401)
 
     def test_invalidemail_data(self):
         """ """
         response = self.app.post(p1_url,
                                  data=json.dumps(self.invalidemail_data),
                                  content_type='application/json')
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 401)
 
     def test_invalidlenusername_data(self):
         """ """
         response = self.app.post(p1_url,
                                  data=json.dumps(self.invalidlenusername_data),
                                  content_type='application/json')
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 401)
 
     def test_invalidpassword_data(self):
         """ """
         response = self.app.post(p1_url,
                                  data=json.dumps(self.invalidpassword_data),
                                  content_type='application/json')
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 401)
 
     def test_invalid_no_username_data(self):
         """ """
         response = self.app.post(p1_url,
                                  data=json.dumps(self.invalidpassword_data),
                                  content_type='application/json')
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 401)
 
     def test_invalid_no_password_data(self):
         """ """
         response = self.app.post(p1_url,
                                  data=json.dumps(self.invalid_no_password_data),
                                  content_type='application/json')
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 401)
 
     # def test_Login(self):
     #     """ """

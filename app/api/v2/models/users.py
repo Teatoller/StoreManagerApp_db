@@ -27,8 +27,8 @@ class UserModel():
         return cursor.execute(user)
 
     def get_by_username(self, username):
-        query = "SELECT * FROM users WHERE username='%s';" % (username,)
-        cursor.execute(query)
+        query = "SELECT * FROM users WHERE username=%s"
+        cursor.execute(query, (username,))
         user = cursor.fetchone()
         return user
 
