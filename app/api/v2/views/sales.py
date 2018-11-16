@@ -81,4 +81,4 @@ class Sale(Resource):
         sale = SaleModel()
         sale.delete_by_sales_id(id)
         return make_response(jsonify(
-                {'msg': 'sale deleted succesfully'}), 200)
+                {'message': 'sale deleted succesfully'}), 200)
