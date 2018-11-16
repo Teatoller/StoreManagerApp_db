@@ -64,7 +64,7 @@ class Product(Resource):
             }
             return {"status": "successful",
                     "product": format_p}, 200
-        return {"status": "unsuccesful!", "msg": "product not is stock"}
+        return {"status": "unsuccesful!", "msg": "product not in stock"}, 404
 
     @jwt_required
     def put(self, id=None):
@@ -81,4 +81,4 @@ class Product(Resource):
         product = ProductModel()
         product.delete_by_id(id)
         return make_response(jsonify(
-                {'msg': 'product deleted succesfully'}), 201)
+                {'msg': 'product deleted succesfully'}), 200)
