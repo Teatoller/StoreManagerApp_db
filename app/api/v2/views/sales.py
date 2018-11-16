@@ -64,7 +64,7 @@ class Sale(Resource):
             }
             return {"status": "successful",
                     "sale": format_s}, 200
-        return {"status": "unsuccesful!", "msg": "sale not in record"}
+        return {"status": "unsuccesful!", "msg": "sale not in record"}, 404
 
     @jwt_required
     def put(self, id=None):
@@ -81,4 +81,4 @@ class Sale(Resource):
         sale = SaleModel()
         sale.delete_by_sales_id(id)
         return make_response(jsonify(
-                {'msg': 'sale deleted succesfully'}), 201)
+                {'msg': 'sale deleted succesfully'}), 200)
