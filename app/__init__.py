@@ -26,7 +26,6 @@ def create_app(config_name):
         jti = decrypted_token['jti']
         return jti in blacklist
 
-
     ''' method to create all tables '''
 
     create_tables()
