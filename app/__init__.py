@@ -1,6 +1,6 @@
 from flask import Flask
 from Instance.config import app_config
-from db import create_tables
+from db import create_tables, create_default_admin
 from flask_jwt_extended import (JWTManager, jwt_required, get_raw_jwt)
 # from app.api.v2.views.users import blacklist
 
@@ -30,6 +30,7 @@ def create_app(config_name):
     ''' method to create all tables '''
 
     create_tables()
+    create_default_admin()
 
     from app.api.v2 import version_2 as v2
     app.register_blueprint(v2)
