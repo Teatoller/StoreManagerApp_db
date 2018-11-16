@@ -81,4 +81,4 @@ class Product(Resource):
         product = ProductModel()
         product.delete_by_id(id)
         return make_response(jsonify(
-                {'msg': 'product deleted succesfully'}), 200)
+                {'message': 'product deleted succesfully'}), 200)
