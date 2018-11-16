@@ -25,8 +25,6 @@ def db_connection():
                 return connection
 
 
-
-
 def create_tables():
         cursor = db_connection().cursor()
 
@@ -64,9 +62,11 @@ def create_tables():
 
 def create_default_admin():
         cursor = db_connection().cursor()
-        firstname = 'Storemanager',
-        lastname = 'Owner',
+
+        firstname = 'storemanager'
+        lastname = 'owner'
         username = 'defaultadmin'
+        email = 'admin@storeapp.co.ke'
         password = 'test123'
         role = 'admin'
 
@@ -76,7 +76,9 @@ def create_default_admin():
 
         if not data:
                 query = "INSERT INTO users(firstname, lastname, username, email," \
-                 " password,role) VALUES('%s','%s', '%s', '%s', '%s', '%s')" % (
-                    self.firstname, self.lastname, self.username, self.email,
-                    self.password, self.role)                
-        return cursor.execute(query)
+                 " password,role) VALUES(%s, %s, %s, %s, %s, %s)"
+                return cursor.execute(query, (firstname, lastname, username, email, password, role))
+                db_connection().commit()
+                
+                
+
