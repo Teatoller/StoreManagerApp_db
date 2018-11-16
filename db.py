@@ -25,6 +25,8 @@ def db_connection():
                 return connection
 
 
+
+
 def create_tables():
         cursor = db_connection().cursor()
 
@@ -58,3 +60,23 @@ def create_tables():
 
         for table in tables:
                 cursor.execute(table)
+
+
+def create_default_admin():
+        cursor = db_connection().cursor()
+        firstname = 'Storemanager',
+        lastname = 'Owner',
+        username = 'defaultadmin'
+        password = 'test123'
+        role = 'admin'
+
+        query = "SELECT * FROM users WHERE username=%s"
+        cursor.execute(query, (username,))
+        data = cursor.fetchone()
+
+        if not data:
+                query = "INSERT INTO users(firstname, lastname, username, email," \
+                 " password,role) VALUES('%s','%s', '%s', '%s', '%s', '%s')" % (
+                    self.firstname, self.lastname, self.username, self.email,
+                    self.password, self.role)                
+        return cursor.execute(query)
