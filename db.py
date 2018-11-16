@@ -2,6 +2,7 @@ import psycopg2
 from psycopg2 import Error
 import os
 from Instance.config import app_config
+from werkzeug.security import generate_password_hash
 
 config_name = os.getenv('APP_SETTINGS')
 db_url = os.getenv('DATABASE_URL')
@@ -67,7 +68,7 @@ def create_default_admin():
         lastname = 'owner'
         username = 'defaultadmin'
         email = 'admin@storeapp.co.ke'
-        password = 'test123'
+        password = generate_password_hash('test123')
         role = 'admin'
 
         query = "SELECT * FROM users WHERE username=%s"
@@ -79,6 +80,3 @@ def create_default_admin():
                  " password,role) VALUES(%s, %s, %s, %s, %s, %s)"
                 return cursor.execute(query, (firstname, lastname, username, email, password, role))
                 db_connection().commit()
-                
-                
-
