@@ -9,9 +9,9 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 class Sale(Resource):
     @jwt_required
     def post(self):
-        user_detail = UserModel().get_by_username(get_jwt_identity())
-        if user_detail['role'] == "admin":
-            return{'msg': 'Access denied, only for Store attendants'}, 401
+        # user_detail = UserModel().get_by_username(get_jwt_identity())
+        # if user_detail['role'] == "admin":
+        #     return{'msg': 'Access denied, only for Store attendants'}, 401
 
         """ Add and validates sale that is added """
         data = request.get_json()
@@ -77,8 +77,16 @@ class Sale(Resource):
             return make_response(jsonify({"msg": "sale not possible"}), 404)
 
     @jwt_required
-    def delete(self, id):
+    def delete(self, id=None):
+        """ Deletes a Single sale """
         sale = SaleModel()
-        sale.delete_by_sales_id(id)
-        return make_response(jsonify(
-                {'message': 'sale deleted succesfully'}), 200)
+        if not id:
+            return make_response(jsonify({'msg': 'no related sale id'}, 422))
+        else:
+            if SaleModel.get_by_sales_id(self, id) is not None:
+                SaleModel.delete_by_sales_id(self, id)
+                return make_response(jsonify(
+                 {'message': 'sale deleted succesfully'}), 200)
+            else:
+                return make_response(jsonify(
+                 {'message': 'sale not found'}), 404)
