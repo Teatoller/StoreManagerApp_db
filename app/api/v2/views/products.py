@@ -9,9 +9,9 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 class Product(Resource):
     @jwt_required
     def post(self):
-        user_detail = UserModel().get_by_username(get_jwt_identity())
-        if user_detail['role'] == "user":
-            return{'msg': 'not authorised access denied'}, 401
+        # user_detail = UserModel().get_by_username(get_jwt_identity())
+        # if user_detail['role'] == "user":
+        #     return{'msg': 'not authorised access denied'}, 401
 
         """ Add and validates product that are added """
         data = request.get_json()
@@ -74,11 +74,19 @@ class Product(Resource):
         user = get_jwt_identity
 
         if data is not None and not Product.get_by_product_id(self, id):
-            return make_response(jsonify({"msg": "productnot available"}), 404)
+            return make_response(jsonify({"msg": "product not available"}), 404)
 
     @jwt_required
-    def delete(self, id):
+    def delete(self, id=None):
+        """ Deletes a Single product """
         product = ProductModel()
-        product.delete_by_id(id)
-        return make_response(jsonify(
-                {'msg': 'product deleted succesfully'}), 200)
+        if not id:
+            return make_response(jsonify({'msg': 'no related prod id'}, 422))
+        else:
+            if ProductModel.get_by_product_id(self, id) is not None:
+                ProductModel.delete_by_id(self, id)
+                return make_response(jsonify(
+                 {'message': 'product deleted succesfully'}), 200)
+            else:
+                return make_response(jsonify(
+                {'message': 'product not found'}), 404)
