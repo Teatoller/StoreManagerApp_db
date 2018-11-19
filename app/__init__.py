@@ -21,9 +21,10 @@ def create_app(config_name):
     jwt = JWTManager(app)
     # jwt.init_app(app)
 
-    @jwt.token_in_blacklist_loader
+    @jwt.token_in_blacklist_loader(callable)
     def check_if_token_in_blacklist(decrypted_token):
         jti = decrypted_token['jti']
+        print(jti in blacklist)
         return jti in blacklist
 
     ''' method to create all tables '''
