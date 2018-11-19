@@ -11,6 +11,7 @@ from werkzeug.security import check_password_hash
 import datetime
 # from app.__init__ import jwt
 from app.__init__ import blacklist
+
 blacklist = set()
 
 
@@ -118,7 +119,11 @@ class Login(Resource):
 
 class Logout(Resource):
     @jwt_required
-    def delete(self):
+    def post(self):
+        current_user = get_jwt_identity()
+        if current_user is None:
+            return{'msg': 'login to access resource'}, 400
+
         jti = get_raw_jwt()['jti']
         print(blacklist)
         blacklist.add(jti)
